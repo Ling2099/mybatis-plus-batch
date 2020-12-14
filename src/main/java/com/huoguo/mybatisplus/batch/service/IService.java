@@ -1,6 +1,6 @@
 package com.huoguo.mybatisplus.batch.service;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @ClassName: IService
@@ -11,7 +11,7 @@ import java.util.Collection;
  */
 public interface IService<T> {
 
-    boolean executeBatch(Collection<T> entityList);
+    boolean saveBatch(List<T> entityList);
 
-    boolean executeBatch(Collection<T> entityList, int val1);
+    boolean saveBatch(List<T> entityList, int val1);
 }

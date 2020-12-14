@@ -14,4 +14,12 @@ public final class DefaultConstants {
 
     /** 默认执行批量操作的数量 **/
     public static final int DEFAULT_BATCH_SIZE = 500;
+
+    /** 默认 -- 左括号 **/
+    public static final String LEFT_PARENTHESIS = "(";
+
+    /** 默认 -- 有括号 **/
+    public static final String RIGHT_PARENTHESIS = ")";
+
+
 }
