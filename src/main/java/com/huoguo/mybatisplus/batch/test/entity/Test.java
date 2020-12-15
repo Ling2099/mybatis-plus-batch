@@ -23,8 +23,8 @@ public class Test extends Model<Test> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
+    @TableId(value = "ids", type = IdType.ASSIGN_ID)
+    private Integer ids;
 
     private String name;
 
@@ -35,7 +35,7 @@ public class Test extends Model<Test> {
 
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return this.ids;
     }
 
 }
