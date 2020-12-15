@@ -19,7 +19,16 @@ public abstract class AbstractMethod {
 
     public final <T> void dohandle(List<T> entityList, int size) {
         isEmpty(entityList);
-        TableInfo tableInfo = getTableInfo(getClazz(entityList));
+        // 获取泛型实例
+        Class<?> clazz = getClazz(entityList);
+        // 获取表映射信息
+        TableInfo tableInfo = getTableInfo(clazz);
+
+        // 需要获取表名
+        // tableInfo.getTableName();
+        // 需要获取字段名称
+        // tableInfo.getFieldList();
+
         // 拆分list
         calcSize(tableInfo, entityList, size);
         // sql的前半部分
