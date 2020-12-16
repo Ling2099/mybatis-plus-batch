@@ -4,15 +4,20 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.huoguo.mybatisplus.batch.test.entity.Test">
-        <id column="id" property="id" />
+        <id column="ids" property="ids" />
         <result column="name" property="name" />
         <result column="age" property="age" />
         <result column="is_del" property="isDel" />
+
+        <result column="create_time" property="createTime" />
+        <result column="creator" property="creator" />
+        <result column="creator_id" property="creatorId" />
+        <result column="dept_id" property="deptId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, age, is_del
+        id, name, age, is_del, create_time, creator, creator_id, dept_id
     </sql>
 
 </mapper>

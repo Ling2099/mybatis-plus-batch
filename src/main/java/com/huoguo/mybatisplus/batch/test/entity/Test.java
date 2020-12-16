@@ -1,9 +1,12 @@
 package com.huoguo.mybatisplus.batch.test.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -19,19 +22,19 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Test extends Model<Test> {
+public class Test extends BaseEntities<Test> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "ids", type = IdType.ASSIGN_ID)
+    @TableId(value = "ids", type = IdType.AUTO)
     private Integer ids;
 
     private String name;
 
     private Integer age;
 
+    @TableLogic
     private Boolean isDel;
-
 
     @Override
     protected Serializable pkVal() {

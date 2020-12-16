@@ -22,4 +22,18 @@ public final class DefaultConstants {
     public static final String RIGHT_PARENTHESIS = ")";
 
 
+    /** 主键策略 AUTO **/
+    public static final int AUTO = 0;
+
+    /** 主键策略 NONE **/
+    public static final int NONE = 1;
+
+    /** 主键策略 INPUT **/
+    public static final int INPUT = 2;
+
+    /** 主键策略 ASSIGN_ID **/
+    public static final int ASSIGN_ID = 3;
+
+    /** 主键策略 ASSIGN_UUID **/
+    public static final int ASSIGN_UUID = 4;
 }
