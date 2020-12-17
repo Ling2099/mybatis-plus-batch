@@ -5,6 +5,8 @@ import com.huoguo.mybatisplus.batch.injector.InsertTemplate;
 import com.huoguo.mybatisplus.batch.service.BatchService;
 import com.huoguo.mybatisplus.batch.template.AbstractMethod;
 
+import org.apache.ibatis.session.SqlSession;
+
 import java.util.List;
 
 /**

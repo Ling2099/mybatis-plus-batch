@@ -10,7 +10,7 @@ package com.huoguo.mybatisplus.batch.enums;
 public enum SqlMethod {
 
     /** 插入集合数据 **/ // 这里的SQL可能会改
-    INSERT_LIST("insert", "插入集合数据（选择字段插入）", "<script>\nINSERT INTO %s (%s) VALUES %s\n</script>");
+    INSERT_LIST("insert", "插入集合数据（选择字段插入）", "INSERT INTO %s (%s) VALUES %s");
 
     private final String method;
     private final String desc;

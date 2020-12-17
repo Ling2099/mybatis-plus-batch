@@ -27,10 +27,16 @@ public class TestServiceImpl extends ServiceImpl<TestMapper, Test> implements IT
         Test test = new Test();
         test.setName("测试1");
         test.setAge(10);
+        test.setCreator("张三");
+        test.setDeptId(10L);
+        test.setCreatorId(1L);
 
         Test test2 = new Test();
         test2.setName("测试2");
         test2.setAge(11);
+        test.setCreator("张三");
+        test.setDeptId(10L);
+        test.setCreatorId(1L);
 
         List<Test> list = new ArrayList<>();
         list.add(test);
@@ -38,5 +44,7 @@ public class TestServiceImpl extends ServiceImpl<TestMapper, Test> implements IT
 
         BatchService<Test> batchService = new BatchServiceImpl<>();
         batchService.saveBatch(list);
+
+        // super.save(new Test().setAge(20).setName("王五"));
     }
 }
