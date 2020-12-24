@@ -55,12 +55,10 @@ public class BatchServiceImpl implements BatchService {
 
 
 
-        BaseMapper baseMapper = (BaseMapper)Proxy.newProxyInstance(BaseMapper.class.getClassLoader(), new Class<?>[]{BaseMapper.class}, new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                ConcurrentHashMap<String, Object> map = buildMethodArgs(tableInfo, method, args);
-                return null;
-            }
+        BaseMapper baseMapper = (BaseMapper)Proxy.newProxyInstance(BaseMapper.class.getClassLoader(), new Class<?>[]{BaseMapper.class}, (proxy, method, args) -> {
+
+            ConcurrentHashMap<String, Object> map = buildMethodArgs(tableInfo, method, args);
+            return null;
         });
         baseMapper.insert(list);
         return null;
