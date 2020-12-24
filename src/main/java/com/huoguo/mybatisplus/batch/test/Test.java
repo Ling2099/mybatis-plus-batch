@@ -63,7 +63,7 @@ public class Test {
             // 判断有主键注解的字段
             if (item.isAnnotationPresent(TableId.class)) {
                 TableId tableId = item.getAnnotation(TableId.class);
-                System.out.println("主键是：" + tableId.value() + "  ,类型是：" + tableId.type().name());
+                System.out.println("类型是：" + tableId.type().name());
             }
         });
     }

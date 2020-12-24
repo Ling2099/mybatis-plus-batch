@@ -1,20 +1,20 @@
 package com.huoguo.mybatisplus.batch.annotation;
 
-import com.huoguo.mybatisplus.batch.enums.IdType;
-
 import java.lang.annotation.*;
 
 /**
- * @ClassName: TableId
- * @Description: 主键ID
+ * @ClassName: TableLogic
+ * @Description: 逻辑删除
  * @Author: LZH
- * @Date: 2020/12/24 21:48
+ * @Date: 2020/12/25 0:29
  * @Version: 1.0
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-public @interface TableId {
+public @interface TableLogic {
 
-    IdType type() default IdType.NONE;
+    String value() default "";
+
+    String delval() default "";
 }
