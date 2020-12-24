@@ -1,6 +1,6 @@
-package com.huoguo.mybatisplus.batch.test.mapper;
+package com.huoguo.mybatisplus.batch.mapper;
 
-import com.huoguo.mybatisplus.batch.test.entity.Test;
+import com.huoguo.mybatisplus.batch.entity.Test;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

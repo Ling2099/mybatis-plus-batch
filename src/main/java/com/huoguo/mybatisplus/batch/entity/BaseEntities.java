@@ -1,4 +1,4 @@
-package com.huoguo.mybatisplus.batch.test.entity;
+package com.huoguo.mybatisplus.batch.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
