@@ -16,5 +16,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface TableId {
 
-    IdType type() default IdType.NONE;
+    String value() default "";
+
+    IdType type() default IdType.INPUT;
 }

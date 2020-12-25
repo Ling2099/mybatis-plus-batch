@@ -11,14 +11,12 @@ public enum IdType {
 
     /** 自增ID **/
     AUTO(0),
-    /** 用户自定义ID **/
-    NONE(1),
     /** 用户输入ID **/
-    INPUT(2),
+    INPUT(1),
     /** 雪花ID **/
-    ASSIGN_ID(3),
+    ASSIGN_ID(2),
     /** UUID **/
-    ASSIGN_UUID(4);
+    ASSIGN_UUID(3);
 
     private final int key;
 

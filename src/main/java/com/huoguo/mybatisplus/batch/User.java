@@ -1,4 +1,4 @@
-package com.huoguo.mybatisplus.batch.entity;
+package com.huoguo.mybatisplus.batch;
 
 import com.huoguo.mybatisplus.batch.annotation.TableId;
 import com.huoguo.mybatisplus.batch.annotation.TableName;
@@ -18,10 +18,11 @@ import lombok.experimental.Accessors;
 @TableName(value = "user")
 public class User {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     private String name;
 
     private int sex;
+
 }
