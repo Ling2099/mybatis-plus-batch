@@ -34,12 +34,20 @@ public class Test {
 
     public static void main(String[] args) {
         List<User> list = new ArrayList<>();
-        list.add(new User().setId(1L).setName("张三").setSex(1));
-        list.add(new User().setId(2L).setName("李四").setSex(2));
-        list.add(new User().setId(3L).setName("王五").setSex(3));
+
+        for (int i = 0; i < 100001; i ++) {
+            list.add(new User().setId(Integer.toUnsignedLong(i)).setName("张三" + i).setSex(i));
+        }
+
+        // list.add(new User().setId(1L).setName("张三").setSex(1));
+        // list.add(new User().setId(2L).setName("李四").setSex(2));
+        // list.add(new User().setId(3L).setName("王五").setSex(3));
 
         // 这里需要拆分下list，否则报sql超长
+        long startTime = System.currentTimeMillis();
         test1(list);
+        long endTime = System.currentTimeMillis();
+        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
     }
 
     @SneakyThrows
@@ -90,7 +98,7 @@ public class Test {
             String name = (String)map.get(DefaultConstants.DEFAULT_ID_NAME);
 
             StitchingSqlService stitchingSqlService = StatusFactory.getServicePath(type);
-            values = stitchingSqlService.getSqlString(column, CollectionUtils.toMap(list));
+            values = stitchingSqlService.getSqlString(column, CollectionUtils.toMaps(list, fields));
         }
 
         String sql = String.format(SqlMethod.INSERT_LIST.getSql(), tableName, column, values);
