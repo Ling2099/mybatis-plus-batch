@@ -13,7 +13,7 @@ public final class DefaultConstants {
     public static final int DEFAULT_INDEX_VALUE = 0;
 
     /** 默认执行批量操作的数量 **/
-    public static final int DEFAULT_BATCH_SIZE = 500;
+    public static final int DEFAULT_BATCH_SIZE = 1000;
 
     /** 默认值 左括号 **/
     public static final String LEFT_PARENTHESIS = "(";
@@ -22,30 +22,11 @@ public final class DefaultConstants {
     public static final String RIGHT_PARENTHESIS = ")";
 
     /** 默认值 逗号 **/
-    public static final String DEFAULT_COMMA = ",";
+    public static final String DEFAULT_COMMA = ", ";
 
-    /** 默认值 逗号空格 **/
-    public static final String DEFAULT_COMMA_BLANK = ", ";
+    /** 默认值 年月日 **/
+    public static final String YYYY_MM_DD = "yyyy-MM-dd";
 
-    /** 默认值 主键ID列名 **/
-    public static final String DEFAULT_ID_NAME = "name";
-
-    /** 默认值 主键ID类型 **/
-    public static final String DEFAULT_ID_TYPE = "type";
-
-
-    /** 主键策略 AUTO **/
-    public static final int AUTO = 0;
-
-    /** 主键策略 NONE **/
-    public static final int NONE = 1;
-
-    /** 主键策略 INPUT **/
-    public static final int INPUT = 2;
-
-    /** 主键策略 ASSIGN_ID **/
-    public static final int ASSIGN_ID = 3;
-
-    /** 主键策略 ASSIGN_UUID **/
-    public static final int ASSIGN_UUID = 4;
+    /** 默认值 年月日时分秒 **/
+    public static final String HH_MM_SS = "HH:mm:ss";
 }

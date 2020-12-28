@@ -1,14 +1,16 @@
 package com.huoguo.mybatisplus.batch.template;
 
-import com.huoguo.mybatisplus.batch.annotation.TableId;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.huoguo.mybatisplus.batch.annotation.TableName;
 import com.huoguo.mybatisplus.batch.constant.DefaultConstants;
-import com.huoguo.mybatisplus.batch.enums.IdType;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSession;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @ClassName: AbstractTemplate
@@ -19,47 +21,88 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractTemplate {
 
-    protected void doBacth(List<?> list) {
+    public Boolean bacth(List<?> list, int size) {
+        return splitList(list, size);
+    }
+
+    private Boolean splitList(List<?> list, int size) {
+        int total = list.size();
+
+        if(total <= size){
+            return doSth(list);
+        }
+
+        int limit = total / size;
+        int residue = total % size;
+        Boolean mark = false;
+        for(int i = 0 ; i < limit; i++){
+            mark = doSth(list.subList(i * size, size * (i + 1)));
+        }
+        if(residue > 0){
+            mark = doSth(list.subList(limit * size, total));
+        }
+        return mark;
+    }
+
+    private Boolean doSth(List<?> list) {
         Class<?> clazz = getClazz(list);
-        Field[] fields = clazz.getDeclaredFields();
-
         String tableName = getTableName(clazz);
-        String colums = getColumns(fields);
-
+        Field[] fields = clazz.getDeclaredFields();
+        String sql = getSql(list, fields, tableName);
+        // return execute(sql, clazz);
+        return true;
     }
 
     private Class<?> getClazz(List<?> list) {
+        if (list == null || list.isEmpty()) {
+            throw new RuntimeException("The current collection is empty");
+        }
         return list.get(DefaultConstants.DEFAULT_INDEX_VALUE).getClass();
     }
 
     private String getTableName(Class<?> clazz) {
-        if (clazz.isAnnotationPresent(TableId.class)) {
+        if (!clazz.isAnnotationPresent(TableName.class)) {
             throw new RuntimeException("The ORM relational mapping object cannot be resolved");
         }
         return clazz.getAnnotation(TableName.class).value();
     }
 
-    protected abstract String getSql();
+    protected abstract String getSql(List<?> list, Field[] fields, String tableName);
 
-    private String getColumns(Field[] fields) {
-        return Arrays.stream(fields).filter(item -> {
-            item.setAccessible(true);
+    private Boolean execute(String sql, Class<?> clazz) {
+        System.out.println(sql);
 
-            if (item.isAnnotationPresent(TableId.class)) {
-                TableId tableId = item.getAnnotation(TableId.class);
-
-                String id = tableId.value();
-                int idType = tableId.type().getKey();
-
-                if ("".equals(id)) {
-                    throw new RuntimeException("The column name is not defined");
-                }
-
-                if (idType == IdType.AUTO.getKey()) {
-                    return !item.getName().equals(id);
+        SqlSession sqlSession = SqlHelper.sqlSessionBatch(clazz);
+        Configuration configuration = sqlSession.getConfiguration();
+        Connection connection = null;
+        Statement stmt = null;
+        try {
+            connection = configuration.getEnvironment().getDataSource().getConnection();
+            stmt = connection.createStatement();
+            return stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
-            return true;
-        }).map(Field::getName).collect(Collectors.joining(", "));
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
     }
 }

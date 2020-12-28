@@ -16,7 +16,7 @@ public enum SqlMethod {
     private final String desc;
     private final String sql;
 
-    private SqlMethod(String method, String desc, String sql) {
+    SqlMethod(String method, String desc, String sql) {
         this.method = method;
         this.desc = desc;
         this.sql = sql;

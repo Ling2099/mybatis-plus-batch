@@ -2,8 +2,8 @@ package com.huoguo.mybatisplus.batch.strategy.impl;
 
 import com.huoguo.mybatisplus.batch.strategy.StitchingSqlService;
 
+import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName AssignIdServiceImpl
@@ -15,7 +15,7 @@ import java.util.Map;
 public class AssignIdServiceImpl implements StitchingSqlService {
 
     @Override
-    public String getSqlString(String column, List<Map<String, Object>> list) {
+    public String getSqlString(List<?> list, Field[] fields, String id) {
         return null;
     }
 }

@@ -1,23 +1,23 @@
-#spring:
-## 相关MySQL/druid配置
-#  datasource:
-#    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
-#    username: root
-#    password:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    type: com.alibaba.druid.pool.DruidDataSource
-#    dbcp2:
-#      min-idle: 5
-#      initial-size: 5
-#      max-total: 5
-#      max-wait-millis: 5
-#
-#mybatis-plus:
-#  typeAliasesPackage: com.huoguo
-#  mapper-locations: classpath:mapper/**/*.xml
-#  global-config:
-#    db-config:
-#      logic-not-delete-value: 0
-#      logic-delete-value: 1
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+spring:
+# 相关MySQL/druid配置
+  datasource:
+    url: jdbc:mysql://192.168.2.39:3306/ry-test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 5
+
+mybatis-plus:
+  typeAliasesPackage: com.huoguo
+  mapper-locations: classpath:mapper/**/*.xml
+  global-config:
+    db-config:
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

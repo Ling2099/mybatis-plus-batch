@@ -1,7 +1,7 @@
 package com.huoguo.mybatisplus.batch.strategy;
 
+import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName StitchingSqlService
@@ -12,5 +12,5 @@ import java.util.Map;
  */
 public interface StitchingSqlService {
 
-    String getSqlString(String column, List<Map<String, Object>> list);
+    String getSqlString(List<?> list, Field[] fields, String id);
 }
