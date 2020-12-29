@@ -1,7 +1,5 @@
 package com.huoguo.mybatisplus.batch.enums;
 
-import sun.dc.pr.PRError;
-
 /**
  * @ClassName DateType
  * @Description TODO

@@ -23,10 +23,4 @@ public final class DefaultConstants {
 
     /** 默认值 逗号 **/
     public static final String DEFAULT_COMMA = ", ";
-
-    /** 默认值 年月日 **/
-    public static final String YYYY_MM_DD = "yyyy-MM-dd";
-
-    /** 默认值 年月日时分秒 **/
-    public static final String HH_MM_SS = "HH:mm:ss";
 }

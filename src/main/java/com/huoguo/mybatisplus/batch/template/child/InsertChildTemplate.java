@@ -26,11 +26,9 @@ public class InsertChildTemplate extends AbstractTemplate {
 
     @Override
     protected String getSql(List<?> list, Field[] fields, String tableName) {
+        ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(16);
         StringBuilder stringBuilder = new StringBuilder();
         int idType = 0, len = fields.length;
-
-        ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(16);
-
         String id = "";
 
         for (int i = 0; i < len; i++) {
@@ -52,13 +50,15 @@ public class InsertChildTemplate extends AbstractTemplate {
 
             } else if (fields[i].isAnnotationPresent(TableDate.class)) {
                 TableDate tableDate = fields[i].getAnnotation(TableDate.class);
-                map.put("date_column", tableDate.value());
+                map.put("date_column", fields[i].getName());
                 map.put("date_value", tableDate.type().getValue());
+                stringBuilder.append(tableDate.value());
 
-            } else if (fields[i].isAnnotationPresent(TableDate.class)) {
+            } else if (fields[i].isAnnotationPresent(TableLogic.class)) {
                 TableLogic tableLogic = fields[i].getAnnotation(TableLogic.class);
-                map.put("logic_column", tableLogic.value());
+                map.put("logic_column", fields[i].getName());
                 map.put("logic_value", tableLogic.before());
+                stringBuilder.append(tableLogic.value());
 
             } else {
                 if (!fields[i].isAnnotationPresent(TableColumns.class)) {
@@ -67,14 +67,14 @@ public class InsertChildTemplate extends AbstractTemplate {
 
                 TableColumns tableColumns = fields[i].getAnnotation(TableColumns.class);
                 stringBuilder.append(tableColumns.value());
+            }
 
-                if (i != len - 1) {
-                    stringBuilder.append(DefaultConstants.DEFAULT_COMMA);
-                }
+            if (i != 0 && i != len - 1) {
+                stringBuilder.append(DefaultConstants.DEFAULT_COMMA);
             }
         }
         StitchingSqlService stitchingSqlService = StatusFactory.getServicePath(idType);
-        String values = stitchingSqlService.getSqlString(list, fields, id);
+        String values = stitchingSqlService.getSqlString(list, id, map);
 
         return String.format(SqlMethod.INSERT_LIST.getSql(), tableName, stringBuilder.toString(), values);
     }

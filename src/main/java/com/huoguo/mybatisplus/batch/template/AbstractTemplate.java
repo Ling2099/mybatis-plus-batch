@@ -49,8 +49,7 @@ public abstract class AbstractTemplate {
         String tableName = getTableName(clazz);
         Field[] fields = clazz.getDeclaredFields();
         String sql = getSql(list, fields, tableName);
-        // return execute(sql, clazz);
-        return true;
+        return execute(sql, clazz);
     }
 
     private Class<?> getClazz(List<?> list) {
@@ -70,8 +69,6 @@ public abstract class AbstractTemplate {
     protected abstract String getSql(List<?> list, Field[] fields, String tableName);
 
     private Boolean execute(String sql, Class<?> clazz) {
-        System.out.println(sql);
-
         SqlSession sqlSession = SqlHelper.sqlSessionBatch(clazz);
         Configuration configuration = sqlSession.getConfiguration();
         Connection connection = null;

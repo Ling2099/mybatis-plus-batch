@@ -1,7 +1,7 @@
 package com.huoguo.mybatisplus.batch.strategy;
 
-import java.lang.reflect.Field;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @ClassName StitchingSqlService
@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface StitchingSqlService {
 
-    String getSqlString(List<?> list, Field[] fields, String id);
+    String getSqlString(List<?> list, String id, ConcurrentHashMap<String, Object> map);
 }
