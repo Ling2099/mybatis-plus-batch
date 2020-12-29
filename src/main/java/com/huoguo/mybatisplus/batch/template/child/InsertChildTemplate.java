@@ -7,12 +7,13 @@ import com.huoguo.mybatisplus.batch.annotation.TableLogic;
 import com.huoguo.mybatisplus.batch.constant.DefaultConstants;
 import com.huoguo.mybatisplus.batch.enums.IdType;
 import com.huoguo.mybatisplus.batch.enums.SqlMethod;
-import com.huoguo.mybatisplus.batch.factory.StatusFactory;
-import com.huoguo.mybatisplus.batch.strategy.StitchingSqlService;
 import com.huoguo.mybatisplus.batch.template.AbstractTemplate;
+import com.huoguo.mybatisplus.batch.util.BatchUtils;
+import com.huoguo.mybatisplus.batch.util.SnowflakeUtils;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -73,9 +74,75 @@ public class InsertChildTemplate extends AbstractTemplate {
                 stringBuilder.append(DefaultConstants.DEFAULT_COMMA);
             }
         }
-        StitchingSqlService stitchingSqlService = StatusFactory.getServicePath(idType);
-        String values = stitchingSqlService.getSqlString(list, id, map);
+        String values = this.getValue(list, idType, id, map);
 
         return String.format(SqlMethod.INSERT_LIST.getSql(), tableName, stringBuilder.toString(), values);
+    }
+
+    private String getValue(List<?> list, int type, String id, ConcurrentHashMap<String, Object> map) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        String dateColumn = map.get("date_column").toString();
+        String dateValue = map.get("date_value").toString();
+
+        String logicColumn = map.get("logic_column").toString();
+        String logicValue = map.get("logic_value").toString();
+
+        int size = list.size();
+
+        try {
+            for (int k = 0; k < size; k++) {
+                Field[] field = list.get(k).getClass().getDeclaredFields();
+                int len = field.length;
+
+                stringBuilder.append(DefaultConstants.LEFT_PARENTHESIS);
+
+                for (int i = 0; i < len; i++) {
+                    field[i].setAccessible(true);
+
+                    String name = field[i].getName();
+                    Class<?> clazzType = field[i].getType();
+                    Object value = field[i].get(list.get(k));
+
+
+                    if (name.equals(id)) {
+                        this.setValue(type, stringBuilder, clazzType, value);
+                        continue;
+                    } else if (dateColumn.equals(name)) {
+                        if (!"".equals(dateValue)) {
+                            stringBuilder.append(dateValue);
+                        } else {
+                            stringBuilder.append(BatchUtils.getTypeValue(clazzType, value));
+                        }
+                    } else if (logicColumn.equals(name)) {
+                        stringBuilder.append(logicValue);
+                    } else {
+                        stringBuilder.append(BatchUtils.getTypeValue(clazzType, value));
+                    }
+
+                    if (i != len - 1 && type != 0) {
+                        stringBuilder.append(DefaultConstants.DEFAULT_COMMA);
+                    }
+                }
+                stringBuilder.append(DefaultConstants.RIGHT_PARENTHESIS);
+
+                if (k != size - 1) {
+                    stringBuilder.append(DefaultConstants.DEFAULT_COMMA);
+                }
+            }
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
+    }
+
+    private void setValue(int type, StringBuilder stringBuilder, Class<?> clazzType, Object value) {
+        switch (type) {
+            case 0 : break;
+            case 1 : stringBuilder.append(BatchUtils.getTypeValue(clazzType, value)); break;
+            case 2 : stringBuilder.append(SnowflakeUtils.genId()); break;
+            case 3 : stringBuilder.append("'" + UUID.randomUUID().toString().replaceAll("-","") + "'"); break;
+            default:
+        }
     }
 }

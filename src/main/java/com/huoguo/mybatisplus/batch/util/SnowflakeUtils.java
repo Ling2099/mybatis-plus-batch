@@ -2,9 +2,7 @@ package com.huoguo.mybatisplus.batch.util;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 public class SnowflakeUtils {
 
