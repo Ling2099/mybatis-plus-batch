@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.huoguo</groupId>
-	<artifactId>mybatis-plus</artifactId>
+	<artifactId>mybatis-plus-batch</artifactId>
 	<version>1.0.0</version>
 	<name>mybatis-plus</name>
 	<description>This project comes from Li</description>
