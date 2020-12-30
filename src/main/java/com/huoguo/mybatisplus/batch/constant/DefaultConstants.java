@@ -23,4 +23,16 @@ public final class DefaultConstants {
 
     /** 默认值 逗号 **/
     public static final String DEFAULT_COMMA = ", ";
+
+    /** 时间字段名 **/
+    public static final String DATE_COLUMN = "date_column";
+
+    /** 时间字段值 **/
+    public static final String DATE_VALUE = "date_value";
+
+    /** 逻辑删除字段名 **/
+    public static final String LOGIC_COLUMN = "logic_column";
+
+    /** 逻辑删除字段值 **/
+    public static final String LOGIC_VALUE = "logic_value";
 }

@@ -82,11 +82,11 @@ public class InsertChildTemplate extends AbstractTemplate {
     private String getValue(List<?> list, int type, String id, ConcurrentHashMap<String, Object> map) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        String dateColumn = map.get("date_column").toString();
-        String dateValue = map.get("date_value").toString();
+        String dateColumn = map.get(DefaultConstants.DATE_COLUMN).toString();
+        String dateValue = map.get(DefaultConstants.DATE_VALUE).toString();
 
-        String logicColumn = map.get("logic_column").toString();
-        String logicValue = map.get("logic_value").toString();
+        String logicColumn = map.get(DefaultConstants.LOGIC_COLUMN).toString();
+        String logicValue = map.get(DefaultConstants.LOGIC_VALUE).toString();
 
         int size = list.size();
 
