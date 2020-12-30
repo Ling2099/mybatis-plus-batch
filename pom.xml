@@ -11,13 +11,97 @@
 	<groupId>com.huoguo</groupId>
 	<artifactId>mybatis-plus-batch</artifactId>
 	<version>1.0.0</version>
-	<name>mybatis-plus</name>
-	<description>This project comes from Li</description>
+	<packaging>jar</packaging>
+	<name>mybatis-plus-batch</name>
+	<url>https://github.com/Ling2099/mybatis-plus-batch</url>
+	<description>This is Mybatis Plus based batch write operation tool</description>
 	<inceptionYear>2020</inceptionYear>
+
+	<scm>
+		<url>https://github.com/Ling2099/mybatis-plus-batch</url>
+		<connection>https://github.com/Ling2099/mybatis-plus-batch.git</connection>
+	</scm>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
+
+	<developers>
+		<developer>
+			<name>LizhengHuang</name>
+			<id>LizhengHuang</id>
+			<email>13452110075@163.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.2.1</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9.1</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+				</snapshotRepository>
+				<repository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+	</profiles>
 
 	<dependencies>
 		<dependency>

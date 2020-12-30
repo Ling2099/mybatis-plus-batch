@@ -17,14 +17,18 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @ClassName InsertChildTemplate
- * @Description TODO
- * @Author LZH
- * @Date 2020/12/28 9:15
- * @Version 1.0
+ * 子类实现父类的抽象方法，拼接出可执行的SQL语句
+ * @author Lizhenghuang
  */
 public class InsertChildTemplate extends AbstractTemplate {
 
+    /**
+     * 获取SQL字符串语句
+     * @param list 数据集合
+     * @param fields 类的属性数组
+     * @param tableName 表名
+     * @return 可执行的SQL字符串语句
+     */
     @Override
     protected String getSql(List<?> list, Field[] fields, String tableName) {
         ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(16);
@@ -79,6 +83,14 @@ public class InsertChildTemplate extends AbstractTemplate {
         return String.format(SqlMethod.INSERT_LIST.getSql(), tableName, stringBuilder.toString(), values);
     }
 
+    /**
+     * 获取后半部分的SQL字符串语句
+     * @param list 数据集合
+     * @param type 主键类型
+     * @param id 主键列名
+     * @param map 日期类型字段与逻辑删除字段集合
+     * @return SQL字符串语句
+     */
     private String getValue(List<?> list, int type, String id, ConcurrentHashMap<String, Object> map) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -135,6 +147,13 @@ public class InsertChildTemplate extends AbstractTemplate {
         return stringBuilder.toString();
     }
 
+    /**
+     * 设置主键ID的值
+     * @param type 主键的类型
+     * @param stringBuilder 字符串构建
+     * @param clazzType 列名（属性）的类型
+     * @param value 具体的值
+     */
     private void setValue(int type, StringBuilder stringBuilder, Class<?> clazzType, Object value) {
         switch (type) {
             case 0 : break;

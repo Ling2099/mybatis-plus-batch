@@ -1,11 +1,8 @@
 package com.huoguo.mybatisplus.batch.enums;
 
 /**
- * @ClassName SqlMethod
- * @Description SQL枚举类
- * @Author LZH
- * @Date 2020/12/25 10:55
- * @Version 1.0
+ * SQL片段枚举类
+ * @author Lizhenghuang
  */
 public enum SqlMethod {
 

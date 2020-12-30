@@ -3,20 +3,20 @@ package com.huoguo.mybatisplus.batch.annotation;
 import java.lang.annotation.*;
 
 /**
- * @ClassName: TableLogic
- * @Description: 逻辑删除
- * @Author: LZH
- * @Date: 2020/12/25 0:29
- * @Version: 1.0
+ * 逻辑删除字段注解
+ * @author Lizhenghuang
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface TableLogic {
 
+    /** 列名字符串 **/
     String value() default "";
 
+    /** 默认值 删除前 **/
     String before() default "0";
 
+    /** 默认值 删除后 **/
     String after() default "1";
 }

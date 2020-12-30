@@ -1,11 +1,8 @@
 package com.huoguo.mybatisplus.batch.enums;
 
 /**
- * @ClassName: IdType
- * @Description: 主键类型枚举
- * @Author: LZH
- * @Date: 2020/12/24 21:51
- * @Version: 1.0
+ * 主键类型枚举
+ * @author Lizhenghuang
  */
 public enum IdType {
 

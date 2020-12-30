@@ -1,11 +1,8 @@
 package com.huoguo.mybatisplus.batch.enums;
 
 /**
- * @ClassName DateType
- * @Description TODO
- * @Author LZH
- * @Date 2020/12/28 16:21
- * @Version 1.0
+ * 日期类型枚举
+ * @author Lizhenghuang
  */
 public enum DateType {
 

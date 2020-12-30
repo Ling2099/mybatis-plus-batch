@@ -5,14 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @ClassName BatchUtils
- * @Description TODO
- * @Author LZH
- * @Date 2020/12/29 13:43
- * @Version 1.0
+ * 工具类
+ * @author Lizhenghuang
  */
 public final class BatchUtils {
 
+    /**
+     * 用于辨别属性类型，返回合适的类型值
+     * @param type 属性类型
+     * @param value 属性值
+     * @return 合适的属性值
+     */
     public static Object getTypeValue(Class<?> type, Object value) {
         if (type == int.class || value instanceof Integer) {
             if (null == value) {

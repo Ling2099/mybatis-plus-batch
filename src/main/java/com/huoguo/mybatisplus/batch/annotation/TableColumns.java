@@ -3,16 +3,14 @@ package com.huoguo.mybatisplus.batch.annotation;
 import java.lang.annotation.*;
 
 /**
- * @ClassName TableColumns
- * @Description 表格列
- * @Author LZH
- * @Date 2020/12/28 11:04
- * @Version 1.0
+ * 数据库表的列名注解
+ * @author Lizhenghuang
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface TableColumns {
 
+    /** 列名字符串 **/
     String value() default "";
 }

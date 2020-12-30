@@ -1,11 +1,8 @@
 package com.huoguo.mybatisplus.batch.constant;
 
 /**
- * @ClassName: DefaultConstants
- * @Description: 默认通用常量类
- * @Author: LZH
- * @Date: 2020/12/13 16:51
- * @Version: 1.0
+ * 默认通用常量类
+ * @author Lizhenghuang
  */
 public final class DefaultConstants {
 

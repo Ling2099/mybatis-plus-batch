@@ -4,6 +4,10 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.Random;
 
+/**
+ * 雪花ID工具类
+ * @author Lizhenghuang
+ */
 public class SnowflakeUtils {
 
     /** 时间部分所占长度 */
@@ -44,7 +48,10 @@ public class SnowflakeUtils {
     /** 毫秒内序列的最大值 4095 */
     private static final long SEQ_MAX_NUM = ~(-1 << SEQ_LEN);
 
-
+    /**
+     * 获取雪花ID
+     * @return long类型的雪花ID
+     */
     public synchronized static long genId(){
         long now = System.currentTimeMillis();
 
