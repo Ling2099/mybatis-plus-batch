@@ -120,7 +120,7 @@ public class InsertChildTemplate extends AbstractTemplate {
                         stringBuilder.append(BatchUtils.getTypeValue(clazzType, value));
                     }
 
-                    if (i != len - 1 && type != 0) {
+                    if (i != len - 1) {
                         stringBuilder.append(DefaultConstants.DEFAULT_COMMA);
                     }
                 }
@@ -143,6 +143,10 @@ public class InsertChildTemplate extends AbstractTemplate {
             case 2 : stringBuilder.append(SnowflakeUtils.genId()); break;
             case 3 : stringBuilder.append("'" + UUID.randomUUID().toString().replaceAll("-","") + "'"); break;
             default:
+        }
+
+        if (type != 0) {
+            stringBuilder.append(DefaultConstants.DEFAULT_COMMA);
         }
     }
 }
