@@ -104,7 +104,6 @@ public class InsertChildTemplate extends AbstractTemplate {
                     Class<?> clazzType = field[i].getType();
                     Object value = field[i].get(list.get(k));
 
-
                     if (name.equals(id)) {
                         this.setValue(type, stringBuilder, clazzType, value);
                         continue;
