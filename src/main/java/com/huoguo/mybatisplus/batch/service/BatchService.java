@@ -22,4 +22,19 @@ public interface BatchService {
      * @return 是否成功
      */
     Boolean insertBatch(List<?> list, int size);
+
+    /**
+     * 批量删除
+     * @param list 数据集合
+     * @return 是否成功
+     */
+    Boolean deleteBatch(List<?> list);
+
+    /**
+     * 批量删除
+     * @param list 数据集合
+     * @param size 每次写操作的数据集合大小
+     * @return 是否成功
+     */
+    Boolean deleteBatch(List<?> list, int size);
 }

@@ -7,8 +7,10 @@ package com.huoguo.mybatisplus.batch.enums;
 public enum SqlMethod {
 
     /** 新增 **/
-    INSERT_LIST("insert", "插入集合数据（选择字段插入）", "INSERT INTO %s (%s) VALUES %s");
+    INSERT_LIST("insert", "插入集合数据", "INSERT INTO %s (%s) VALUES %s"),
 
+    /** 删除 **/
+    DELETE_LIST("delete", "逻辑删除数据", "DELETE FROM $s WHERE 1 = 1 $s");
     private final String method;
     private final String desc;
     private final String sql;
