@@ -8,7 +8,7 @@
 		<version>2.2.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.huoguo</groupId>
+	<groupId>com.github.Ling2099</groupId>
 	<artifactId>mybatis-plus-batch</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
@@ -34,6 +34,7 @@
 			<name>LizhengHuang</name>
 			<id>LizhengHuang</id>
 			<email>13452110075@163.com</email>
+			<url>https://github.com/Ling2099</url>
 			<roles>
 				<role>Developer</role>
 			</roles>
