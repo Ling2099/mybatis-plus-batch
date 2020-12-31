@@ -12,8 +12,8 @@ import java.lang.annotation.*;
 public @interface TableColumns {
 
     /**
-     * 列名字符串
-     * @return
+     * 注解默认值
+     * @return 列名字符串
      */
     String value() default "";
 }

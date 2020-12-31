@@ -14,14 +14,14 @@ import java.lang.annotation.*;
 public @interface TableDate {
 
     /**
-     * 列名字符串
-     * @return
+     * 注解默认值
+     * @return 列名字符串
      */
     String value() default "";
 
     /**
-     * 数据类型
-     * @return
+     * 注解默认值
+     * @return 数据类型
      */
     DateType type() default DateType.INPUT;
 }

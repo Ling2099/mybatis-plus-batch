@@ -78,7 +78,7 @@ public class SnowflakeUtils {
 
     /**
      * 获取下一不同毫秒的时间戳，不能与最后的时间戳一样
-     * @return
+     * @return 下一个不同毫秒时间戳
      */
     public static long nextMillis(long lastMillis) {
         long now = System.currentTimeMillis();
@@ -90,7 +90,7 @@ public class SnowflakeUtils {
 
     /**
      * 获取字符串s的字节数组，然后将数组的元素相加，对（max+1）取余
-     * @return
+     * @return 字节数组
      */
     private static int getHostId(String s, int max){
         byte[] bytes = s.getBytes();
@@ -103,7 +103,7 @@ public class SnowflakeUtils {
 
     /**
      * 根据 host address 取余，发生异常就获取 0到31之间的随机数
-     * @return
+     * @return 数值
      */
     public static int getWorkId(){
         try {
@@ -115,7 +115,7 @@ public class SnowflakeUtils {
 
     /**
      * 根据 host name 取余，发生异常就获取 0到31之间的随机数
-     * @return
+     * @return 数值
      */
     public static int getDataId() {
         try {

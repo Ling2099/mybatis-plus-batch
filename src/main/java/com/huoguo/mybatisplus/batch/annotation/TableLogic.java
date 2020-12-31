@@ -12,20 +12,20 @@ import java.lang.annotation.*;
 public @interface TableLogic {
 
     /**
-     * 列名字符串
-     * @return
+     * 注解默认值
+     * @return 列名字符串
      */
     String value() default "";
 
     /**
-     * 默认值 删除前
-     * @return
+     * 注解默认值
+     * @return 默认值 删除前
      */
     String before() default "0";
 
     /**
-     * 默认值 删除后
-     * @return
+     * 注解默认值
+     * @return 默认值 删除后
      */
     String after() default "1";
 }

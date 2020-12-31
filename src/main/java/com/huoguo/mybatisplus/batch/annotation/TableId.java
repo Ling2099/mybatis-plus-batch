@@ -14,14 +14,14 @@ import java.lang.annotation.*;
 public @interface TableId {
 
     /**
-     * 列名字符串
-     * @return
+     * 注解默认值
+     * @return 列名字符串
      */
     String value() default "";
 
     /**
-     * 字段烈性
-     * @return
+     * 注解默认值
+     * @return 字段烈性
      */
     IdType type() default IdType.INPUT;
 }
