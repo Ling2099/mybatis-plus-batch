@@ -11,6 +11,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface TableName {
 
-    /** 表名字符串 **/
+    /**
+     * 表名字符串
+     * @return
+     */
     String value() default "";
 }

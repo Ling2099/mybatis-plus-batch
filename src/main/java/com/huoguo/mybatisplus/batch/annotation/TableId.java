@@ -13,9 +13,15 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface TableId {
 
-    /** 列名字符串 **/
+    /**
+     * 列名字符串
+     * @return
+     */
     String value() default "";
 
-    /** 字段烈性 **/
+    /**
+     * 字段烈性
+     * @return
+     */
     IdType type() default IdType.INPUT;
 }

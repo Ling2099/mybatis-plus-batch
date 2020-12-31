@@ -11,6 +11,9 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface TableColumns {
 
-    /** 列名字符串 **/
+    /**
+     * 列名字符串
+     * @return
+     */
     String value() default "";
 }

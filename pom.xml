@@ -2,12 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<!--<parent>-->
+		<!--<groupId>org.springframework.boot</groupId>-->
+		<!--<artifactId>spring-boot-starter-parent</artifactId>-->
+		<!--<version>2.2.6.RELEASE</version>-->
+		<!--<relativePath/>-->
+	<!--</parent>-->
+
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.6.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
 	</parent>
+
 	<groupId>com.github.Ling2099</groupId>
 	<artifactId>mybatis-plus-batch</artifactId>
 	<version>1.0.0</version>
@@ -17,8 +24,16 @@
 	<description>This is Mybatis Plus based batch write operation tool</description>
 	<inceptionYear>2020</inceptionYear>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
 	<scm>
-		<url>https://github.com/Ling2099/mybatis-plus-batch</url>
+		<url>https://github.co放m/Ling2099/mybatis-plus-batch</url>
 		<connection>https://github.com/Ling2099/mybatis-plus-batch.git</connection>
 	</scm>
 
@@ -108,6 +123,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>2.2.6.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -115,7 +131,6 @@
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>3.4.0</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>

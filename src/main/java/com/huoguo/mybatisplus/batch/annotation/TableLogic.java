@@ -11,12 +11,21 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface TableLogic {
 
-    /** 列名字符串 **/
+    /**
+     * 列名字符串
+     * @return
+     */
     String value() default "";
 
-    /** 默认值 删除前 **/
+    /**
+     * 默认值 删除前
+     * @return
+     */
     String before() default "0";
 
-    /** 默认值 删除后 **/
+    /**
+     * 默认值 删除后
+     * @return
+     */
     String after() default "1";
 }

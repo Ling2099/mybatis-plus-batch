@@ -13,9 +13,15 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface TableDate {
 
-    /** 列名字符串 **/
+    /**
+     * 列名字符串
+     * @return
+     */
     String value() default "";
 
-    /** 数据类型 **/
+    /**
+     * 数据类型
+     * @return
+     */
     DateType type() default DateType.INPUT;
 }
