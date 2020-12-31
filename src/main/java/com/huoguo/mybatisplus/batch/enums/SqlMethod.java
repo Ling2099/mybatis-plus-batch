@@ -11,6 +11,7 @@ public enum SqlMethod {
 
     /** 删除 **/
     DELETE_LIST("delete", "逻辑删除数据", "DELETE FROM $s WHERE 1 = 1 $s");
+
     private final String method;
     private final String desc;
     private final String sql;

@@ -78,6 +78,7 @@ public class SnowflakeUtils {
 
     /**
      * 获取下一不同毫秒的时间戳，不能与最后的时间戳一样
+     * @param lastMillis 毫秒
      * @return 下一个不同毫秒时间戳
      */
     public static long nextMillis(long lastMillis) {
@@ -90,6 +91,8 @@ public class SnowflakeUtils {
 
     /**
      * 获取字符串s的字节数组，然后将数组的元素相加，对（max+1）取余
+     * @param s 我也不知道是个什么字符串
+     * @param max 最大值?
      * @return 字节数组
      */
     private static int getHostId(String s, int max){
