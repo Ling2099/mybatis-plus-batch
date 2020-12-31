@@ -28,6 +28,7 @@ public interface BatchService {
      * @param list 数据集合
      * @return 是否成功
      */
+    @Deprecated
     Boolean deleteBatch(List<?> list);
 
     /**
@@ -36,5 +37,6 @@ public interface BatchService {
      * @param size 每次写操作的数据集合大小
      * @return 是否成功
      */
+    @Deprecated
     Boolean deleteBatch(List<?> list, int size);
 }

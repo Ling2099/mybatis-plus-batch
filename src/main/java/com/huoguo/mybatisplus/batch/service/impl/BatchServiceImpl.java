@@ -41,6 +41,7 @@ public class BatchServiceImpl implements BatchService {
      * @param list 数据集合
      * @return 是否成功
      */
+    @Deprecated
     @Override
     public Boolean deleteBatch(List<?> list) {
         return null;
@@ -52,6 +53,7 @@ public class BatchServiceImpl implements BatchService {
      * @param size 每次写操作的数据集合大小
      * @return 是否成功
      */
+    @Deprecated
     @Override
     public Boolean deleteBatch(List<?> list, int size) {
         return null;
