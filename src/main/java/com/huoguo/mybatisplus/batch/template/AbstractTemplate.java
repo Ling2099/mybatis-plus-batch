@@ -14,12 +14,14 @@ import java.util.List;
 
 /**
  * 模板模式执行sql字符串的动态拼接与操作数据库
+ *
  * @author Lizhenghuang
  */
 public abstract class AbstractTemplate {
 
     /**
      * 模板模式对外提供的方法
+     *
      * @param list 数据集合
      * @param size 每次批量操作的数据集合大小
      * @return 是否成功
@@ -30,6 +32,7 @@ public abstract class AbstractTemplate {
 
     /**
      * 拆分数据集合
+     *
      * @param list 数据集合
      * @param size 每次批量操作的数据集合大小
      * @return 是否成功
@@ -37,17 +40,17 @@ public abstract class AbstractTemplate {
     private Boolean splitList(List<?> list, int size) {
         int total = list.size();
 
-        if(total <= size){
+        if (total <= size) {
             return doSth(list);
         }
 
         int limit = total / size;
         int residue = total % size;
         Boolean mark = false;
-        for(int i = 0 ; i < limit; i++){
+        for (int i = 0; i < limit; i++) {
             mark = doSth(list.subList(i * size, size * (i + 1)));
         }
-        if(residue > 0){
+        if (residue > 0) {
             mark = doSth(list.subList(limit * size, total));
         }
         return mark;
@@ -55,6 +58,7 @@ public abstract class AbstractTemplate {
 
     /**
      * 获取表名、列名、相对应的值，用此来拼接SQL，并执行数据库操作
+     *
      * @param list 数据集合
      * @return 是否成功
      */
@@ -68,6 +72,7 @@ public abstract class AbstractTemplate {
 
     /**
      * 获取Class类型
+     *
      * @param list 数据集合
      * @return 参数中的class
      */
@@ -80,6 +85,7 @@ public abstract class AbstractTemplate {
 
     /**
      * 获取表名
+     *
      * @param clazz 类
      * @return 表名字符串
      */
@@ -92,8 +98,9 @@ public abstract class AbstractTemplate {
 
     /**
      * 获取组装好的SQL
-     * @param list 数据集合
-     * @param fields 类的属性数组
+     *
+     * @param list      数据集合
+     * @param fields    类的属性数组
      * @param tableName 表名
      * @return 可执行的SQL
      */
@@ -101,7 +108,8 @@ public abstract class AbstractTemplate {
 
     /**
      * 执行数据库操作
-      * @param sql 可执行的SQL语句
+     *
+     * @param sql   可执行的SQL语句
      * @param clazz 参数中的对象Class
      * @return 是否成功
      */

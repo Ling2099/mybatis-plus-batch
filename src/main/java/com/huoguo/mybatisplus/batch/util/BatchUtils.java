@@ -6,13 +6,15 @@ import java.util.Date;
 
 /**
  * 工具类
+ *
  * @author Lizhenghuang
  */
 public final class BatchUtils {
 
     /**
      * 用于辨别属性类型，返回合适的类型值
-     * @param type 属性类型
+     *
+     * @param type  属性类型
      * @param value 属性值
      * @return 合适的属性值
      */
@@ -44,7 +46,7 @@ public final class BatchUtils {
             return value;
         } else if (type == String.class) {
             if (null == value) {
-                return "";
+                return "null";
             }
             return "'" + value + "'";
         } else if (type == boolean.class) {
@@ -59,7 +61,7 @@ public final class BatchUtils {
             return new BigDecimal(value + "");
         } else if (type == Date.class) {
             if (null == value) {
-                return value;
+                return "null";
             }
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             return "'" + formatter.format(value) + "'";
