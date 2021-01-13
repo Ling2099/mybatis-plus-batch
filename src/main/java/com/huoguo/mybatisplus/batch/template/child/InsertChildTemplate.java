@@ -13,6 +13,7 @@ import com.huoguo.mybatisplus.batch.util.SnowflakeUtils;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,7 +34,7 @@ public class InsertChildTemplate extends AbstractTemplate {
      */
     @Override
     protected String getSql(List<?> list, Field[] fields, String tableName) {
-        ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>(16);
+        Map<String, Object> map = new ConcurrentHashMap<>(16);
         StringBuilder stringBuilder = new StringBuilder();
         int idType = 0, len = fields.length;
         String id = "";
@@ -57,7 +58,7 @@ public class InsertChildTemplate extends AbstractTemplate {
 
             } else if (fields[i].isAnnotationPresent(TableDate.class)) {
                 TableDate tableDate = fields[i].getAnnotation(TableDate.class);
-                map.put("date_column", fields[i].getName());
+                map.put(fields[i].getName(), fields[i].getName());
                 map.put("date_value", tableDate.type().getValue());
                 stringBuilder.append(tableDate.value());
 
@@ -94,11 +95,11 @@ public class InsertChildTemplate extends AbstractTemplate {
      * @param map  日期类型字段与逻辑删除字段集合
      * @return SQL字符串语句
      */
-    private String getValue(List<?> list, int type, String id, ConcurrentHashMap<String, Object> map) {
+    private String getValue(List<?> list, int type, String id, Map<String, Object> map) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        String dateColumn = map.get(DefaultConstants.DATE_COLUMN).toString();
-        String dateValue = map.get(DefaultConstants.DATE_VALUE).toString();
+        // String dateColumn = map.get(DefaultConstants.DATE_COLUMN).toString();
+        // String dateValue = map.get(DefaultConstants.DATE_VALUE).toString();
 
         String logicColumn = map.get(DefaultConstants.LOGIC_COLUMN).toString();
         String logicValue = map.get(DefaultConstants.LOGIC_VALUE).toString();
@@ -119,15 +120,14 @@ public class InsertChildTemplate extends AbstractTemplate {
                     Class<?> clazzType = field[i].getType();
                     Object value = field[i].get(list.get(k));
 
+                    String dateColumn = map.get(name) != null ? map.get(name).toString() : null;
+
                     if (name.equals(id)) {
                         this.setValue(type, stringBuilder, clazzType, value);
                         continue;
-                    } else if (dateColumn.equals(name)) {
-                        if (!"".equals(dateValue)) {
-                            stringBuilder.append(dateValue);
-                        } else {
-                            stringBuilder.append(BatchUtils.getTypeValue(clazzType, value));
-                        }
+                    } else if (name.equals(dateColumn)) {
+                        String dateValue = map.get(DefaultConstants.DATE_VALUE).toString();
+                        stringBuilder.append(!"".equals(dateValue) ? dateValue : "null");
                     } else if (logicColumn.equals(name)) {
                         stringBuilder.append(logicValue);
                     } else {
