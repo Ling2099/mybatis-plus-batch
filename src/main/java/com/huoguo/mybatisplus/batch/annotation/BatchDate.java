@@ -1,17 +1,18 @@
 package com.huoguo.mybatisplus.batch.annotation;
 
-import com.huoguo.mybatisplus.batch.enums.IdType;
+import com.huoguo.mybatisplus.batch.enums.BatchDateEnum;
 
 import java.lang.annotation.*;
 
 /**
- * 数据库主键字段注解
+ * 数据库日期类型字段注解
  * @author Lizhenghuang
  */
+@Deprecated
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-public @interface TableId {
+public @interface BatchDate {
 
     /**
      * 注解默认值
@@ -21,7 +22,7 @@ public @interface TableId {
 
     /**
      * 注解默认值
-     * @return 字段烈性
+     * @return 数据类型
      */
-    IdType type() default IdType.INPUT;
+    BatchDateEnum type() default BatchDateEnum.INPUT;
 }

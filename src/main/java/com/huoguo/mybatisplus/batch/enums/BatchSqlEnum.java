@@ -4,7 +4,7 @@ package com.huoguo.mybatisplus.batch.enums;
  * SQL片段枚举类
  * @author Lizhenghuang
  */
-public enum SqlMethod {
+public enum BatchSqlEnum {
 
     /** 新增 **/
     INSERT_LIST("insert", "插入集合数据", "INSERT INTO %s (%s) VALUES %s"),
@@ -16,7 +16,7 @@ public enum SqlMethod {
     private final String desc;
     private final String sql;
 
-    SqlMethod(String method, String desc, String sql) {
+    BatchSqlEnum(String method, String desc, String sql) {
         this.method = method;
         this.desc = desc;
         this.sql = sql;

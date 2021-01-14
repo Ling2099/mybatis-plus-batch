@@ -4,7 +4,7 @@ package com.huoguo.mybatisplus.batch.constant;
  * 默认通用常量类
  * @author Lizhenghuang
  */
-public final class DefaultConstants {
+public final class BatchConstants {
 
     /** 默认集合第一个下标 **/
     public static final int DEFAULT_INDEX_VALUE = 0;
@@ -22,14 +22,36 @@ public final class DefaultConstants {
     public static final String DEFAULT_COMMA = ", ";
 
     /** 时间字段名 **/
+    @Deprecated
     public static final String DATE_COLUMN = "date_column";
 
     /** 时间字段值 **/
+    @Deprecated
     public static final String DATE_VALUE = "date_value";
 
     /** 逻辑删除字段名 **/
+    @Deprecated
     public static final String LOGIC_COLUMN = "logic_column";
 
     /** 逻辑删除字段值 **/
+    @Deprecated
     public static final String LOGIC_VALUE = "logic_value";
+
+    /** 默认ID策略 用户默认输入 **/
+    public static final String DEFAULT_INPUT = "INPUT";
+
+    /** 默认ID策略 雪花ID **/
+    public static final String DEFAULT_ASSIGN_ID = "ASSIGN_ID";
+
+    /** 默认ID策略 UUID **/
+    public static final String DEFAULT_ASSIGN_UUID = "ASSIGN_UUID";
+
+    /** 默认忽略字段 **/
+    public static final String DEFAULT_IGNORE = "IGNORE";
+
+    /** 默认字段列值 **/
+    public static final String DEFAULT_VALUE = "DEFAULT";
+
+    /** 默认新增填充Bean Name **/
+    public static final String FILL_NAME_INSERT = "batchInsert";
 }

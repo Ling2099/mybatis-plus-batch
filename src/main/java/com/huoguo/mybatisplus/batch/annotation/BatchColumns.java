@@ -1,17 +1,15 @@
 package com.huoguo.mybatisplus.batch.annotation;
 
-import com.huoguo.mybatisplus.batch.enums.DateType;
-
 import java.lang.annotation.*;
 
 /**
- * 数据库日期类型字段注解
+ * 数据库表的列名注解
  * @author Lizhenghuang
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-public @interface TableDate {
+public @interface BatchColumns {
 
     /**
      * 注解默认值
@@ -19,9 +17,5 @@ public @interface TableDate {
      */
     String value() default "";
 
-    /**
-     * 注解默认值
-     * @return 数据类型
-     */
-    DateType type() default DateType.INPUT;
+    String type() default "";
 }

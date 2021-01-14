@@ -8,7 +8,7 @@ import java.util.Random;
  * 雪花ID工具类
  * @author Lizhenghuang
  */
-public class SnowflakeUtils {
+public class BatchSnow {
 
     /** 时间部分所占长度 */
     private static final int TIME_LEN = 41;

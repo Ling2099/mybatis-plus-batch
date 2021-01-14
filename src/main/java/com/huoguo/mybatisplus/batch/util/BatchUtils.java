@@ -1,7 +1,5 @@
 package com.huoguo.mybatisplus.batch.util;
 
-import org.springframework.util.StringUtils;
-
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,13 +12,34 @@ import java.util.Date;
 public final class BatchUtils {
 
     /**
+     * 转换数据库与实体类映射字段
+     * @param str 数据库字段
+     * @return 实体类属性
+     */
+    public static String toStr(String str) {
+        StringBuilder builder = new StringBuilder();
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+            char ch = str.charAt(i);
+            if ("_".equals(ch + "")) {
+                i = i + 1;
+                String up = (str.charAt(i) + "").toUpperCase();
+                builder.append(up);
+                continue;
+            }
+            builder.append(ch);
+        }
+        return builder.toString();
+    }
+
+    /**
      * 用于辨别属性类型，返回合适的类型值
      *
      * @param type  属性类型
      * @param value 属性值
      * @return 合适的属性值
      */
-    public static Object getTypeValue(Class<?> type, Object value) {
+    public static Object getValue(Class<?> type, Object value) {
         if (type == int.class || value instanceof Integer) {
             if (null == value) {
                 return 0;

@@ -1,8 +1,8 @@
 package com.huoguo.mybatisplus.batch.template;
 
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
-import com.huoguo.mybatisplus.batch.annotation.TableName;
-import com.huoguo.mybatisplus.batch.constant.DefaultConstants;
+import com.huoguo.mybatisplus.batch.annotation.BatchName;
+import com.huoguo.mybatisplus.batch.constant.BatchConstants;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 
@@ -27,6 +27,9 @@ public abstract class AbstractTemplate {
      * @return 是否成功
      */
     public Boolean bacth(List<?> list, int size) {
+        if (list == null || list.isEmpty()) {
+            throw new RuntimeException("The current collection is empty");
+        }
         return splitList(list, size);
     }
 
@@ -67,7 +70,8 @@ public abstract class AbstractTemplate {
         String tableName = getTableName(clazz);
         Field[] fields = clazz.getDeclaredFields();
         String sql = getSql(list, fields, tableName);
-        return execute(sql, clazz);
+        // return execute(sql, clazz);
+        return true;
     }
 
     /**
@@ -77,10 +81,7 @@ public abstract class AbstractTemplate {
      * @return 参数中的class
      */
     private Class<?> getClazz(List<?> list) {
-        if (list == null || list.isEmpty()) {
-            throw new RuntimeException("The current collection is empty");
-        }
-        return list.get(DefaultConstants.DEFAULT_INDEX_VALUE).getClass();
+        return list.get(BatchConstants.DEFAULT_INDEX_VALUE).getClass();
     }
 
     /**
@@ -90,10 +91,10 @@ public abstract class AbstractTemplate {
      * @return 表名字符串
      */
     private String getTableName(Class<?> clazz) {
-        if (!clazz.isAnnotationPresent(TableName.class)) {
+        if (!clazz.isAnnotationPresent(BatchName.class)) {
             throw new RuntimeException("The ORM relational mapping object cannot be resolved");
         }
-        return clazz.getAnnotation(TableName.class).value();
+        return clazz.getAnnotation(BatchName.class).value();
     }
 
     /**
@@ -137,13 +138,10 @@ public abstract class AbstractTemplate {
             if (connection != null) {
                 try {
                     connection.close();
+                    sqlSession.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }
-
-            if (sqlSession != null) {
-                sqlSession.close();
             }
         }
     }

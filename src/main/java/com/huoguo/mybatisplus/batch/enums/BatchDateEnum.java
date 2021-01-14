@@ -4,7 +4,8 @@ package com.huoguo.mybatisplus.batch.enums;
  * 日期类型枚举
  * @author Lizhenghuang
  */
-public enum DateType {
+@Deprecated
+public enum BatchDateEnum {
 
     /** 用户输入 **/
     INPUT(0, ""),
@@ -21,7 +22,7 @@ public enum DateType {
     private final int key;
     private final String value;
 
-    DateType(int key, String value) {
+    BatchDateEnum(int key, String value) {
         this.key = key;
         this.value = value;
     }
