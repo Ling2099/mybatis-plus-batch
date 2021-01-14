@@ -3,13 +3,17 @@ package com.huoguo.mybatisplus.batch.template.child;
 import com.huoguo.mybatisplus.batch.annotation.*;
 import com.huoguo.mybatisplus.batch.constant.BatchConstants;
 import com.huoguo.mybatisplus.batch.enums.BatchIdEnum;
+import com.huoguo.mybatisplus.batch.service.BatchService;
+import com.huoguo.mybatisplus.batch.service.impl.BatchServiceImpl;
 import com.huoguo.mybatisplus.batch.template.AbstractTemplate;
+import com.huoguo.mybatisplus.batch.test.User;
 import com.huoguo.mybatisplus.batch.util.BatchBean;
 import com.huoguo.mybatisplus.batch.util.BatchSnow;
 import com.huoguo.mybatisplus.batch.util.BatchUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -91,25 +95,25 @@ public class BatchInsertTemplate extends AbstractTemplate {
         return null;
     }
 
-//    public static void main(String[] args) {
-//        List<User> list = new ArrayList<>();
-//
-//        User user = new User();
-//        user.setId(1L);
-//        user.setName("张三");
-//        user.setAge(15);
-//
-//        list.add(user);
-//
-//        User user1 = new User();
-//        user1.setId(1L);
-//        user1.setName("张三");
-//        user1.setAge(15);
-//        list.add(user1);
-//
-//        BatchService batchService = new BatchServiceImpl();
-//        batchService.insertBatch(list);
-//    }
+    public static void main(String[] args) {
+        List<User> list = new ArrayList<>();
+
+        User user = new User();
+        user.setId(1L);
+        // user.setName(null);
+        user.setAge(15);
+
+        list.add(user);
+
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setName("张三");
+        user1.setAge(15);
+        list.add(user1);
+
+        BatchService batchService = new BatchServiceImpl();
+        batchService.insertBatch(list);
+    }
 
     /**
      * 获取后半部分的SQL字符串语句
