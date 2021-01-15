@@ -20,7 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 子类实现父类的抽象方法，拼接出可执行的SQL语句
+ * 批量新增拼接SQL逻辑
  *
  * @author Lizhenghuang
  */
