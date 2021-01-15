@@ -118,7 +118,7 @@
         @BatchId(value = "id", type = BatchIdEnum.ASSIGN_ID)
         private Long id;
     
-        @TableColumns(value = "name")
+        @BatchColumns(value = "name")
         private String name;
     
         @BatchColumns(value = "age")
@@ -167,5 +167,5 @@
 
 ## 期望 | Futures
 
-> 欢迎提出更好的意见，帮助完善各个功能
+> 欢迎提出更好的意见，帮助完善各个功能；目前暂不支持SQL打印功能
 
