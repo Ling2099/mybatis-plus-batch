@@ -1,7 +1,9 @@
 package com.huoguo.mybatisplus.batch.util;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -10,6 +12,31 @@ import java.util.Date;
  * @author Lizhenghuang
  */
 public final class BatchUtils {
+
+    /**
+     * 合并数组
+     * @param first 第一个数组
+     * @param second 第二个数组
+     * @param <T> 泛型
+     * @return 新的数组
+     */
+    public static <T> T[] concat(T[] first, T[] second) {
+        T[] result = Arrays.copyOf(first, first.length + second.length);
+        System.arraycopy(second, 0, result, first.length, second.length);
+        return result;
+    }
+
+    /**
+     * 在反射时，排除掉序列化ID
+     * @param field 当前对象属性
+     * @return true代表当前属性为序列化ID
+     */
+    public static Boolean isStatic(Field field) {
+        if (Modifier.isStatic(field.getModifiers())) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * 转换数据库与实体类映射字段
@@ -41,51 +68,25 @@ public final class BatchUtils {
      */
     public static Object getValue(Class<?> type, Object value) {
         if (type == int.class || value instanceof Integer) {
-            if (null == value) {
-                return 0;
-            }
-            return Integer.parseInt(value.toString());
+            return null == value ? 0 : Integer.parseInt(value.toString());
         } else if (type == short.class) {
-            if (null == value) {
-                return 0;
-            }
-            return value;
+            return null == value ? 0 : value;
         } else if (type == byte.class) {
-            if (null == value) {
-                return 0;
-            }
-            return value;
+            return null == value ? 0 : value;
         } else if (type == double.class) {
-            if (null == value) {
-                return 0;
-            }
-            return Double.parseDouble(value.toString());
+            return null == value ? 0 : Double.parseDouble(value.toString());
         } else if (type == long.class) {
-            if (null == value) {
-                return 0;
-            }
-            return value;
+            return null == value ? 0 : value;
+        } else if (type == Long.class) {
+            return null == value ? 0L : value;
         } else if (type == String.class) {
-            if (null == value) {
-                return "null";
-            }
-            return "'" + value + "'";
+            return null == value ? "null" : "'" + value + "'";
         } else if (type == boolean.class) {
-            if (null == value) {
-                return true;
-            }
-            return value;
+            return null == value ? true : value;
         } else if (type == BigDecimal.class) {
-            if (null == value) {
-                return new BigDecimal(0);
-            }
-            return new BigDecimal(value + "");
+            return null == value ? new BigDecimal(0) : new BigDecimal(value + "");
         } else if (type == Date.class) {
-            if (null == value) {
-                return "null";
-            }
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return "'" + formatter.format(value) + "'";
+            return null == value ? "null" : "'" + value + "'";
         } else {
             return type.cast(value);
         }

@@ -17,7 +17,7 @@ public class BatchBean implements ApplicationContextAware {
     /**
      * 获取Spring容器
      * @param applicationContext Spring容器
-     * @throws BeansException
+     * @throws BeansException 异常抛出
      */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

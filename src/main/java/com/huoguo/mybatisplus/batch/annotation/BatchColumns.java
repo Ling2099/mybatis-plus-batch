@@ -16,6 +16,4 @@ public @interface BatchColumns {
      * @return 列名字符串
      */
     String value() default "";
-
-    String type() default "";
 }

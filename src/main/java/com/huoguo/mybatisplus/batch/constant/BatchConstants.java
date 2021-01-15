@@ -53,5 +53,8 @@ public final class BatchConstants {
     public static final String DEFAULT_VALUE = "DEFAULT";
 
     /** 默认新增填充Bean Name **/
-    public static final String FILL_NAME_INSERT = "batchInsert";
+    public static final String FILL_NAME_INSERT = "insert";
+
+    /** 默认修改填充Bean Name **/
+    public static final String FILL_NAME_UPDATE = "update";
 }

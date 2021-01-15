@@ -3,17 +3,17 @@ package com.huoguo.mybatisplus.batch.template.child;
 import com.huoguo.mybatisplus.batch.annotation.*;
 import com.huoguo.mybatisplus.batch.constant.BatchConstants;
 import com.huoguo.mybatisplus.batch.enums.BatchIdEnum;
-import com.huoguo.mybatisplus.batch.service.BatchService;
-import com.huoguo.mybatisplus.batch.service.impl.BatchServiceImpl;
+import com.huoguo.mybatisplus.batch.enums.BatchSqlEnum;
+import com.huoguo.mybatisplus.batch.model.HotPot;
 import com.huoguo.mybatisplus.batch.template.AbstractTemplate;
-import com.huoguo.mybatisplus.batch.test.User;
 import com.huoguo.mybatisplus.batch.util.BatchBean;
 import com.huoguo.mybatisplus.batch.util.BatchSnow;
 import com.huoguo.mybatisplus.batch.util.BatchUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -42,77 +42,76 @@ public class BatchInsertTemplate extends AbstractTemplate {
         Map<String, Object> map = new ConcurrentHashMap<>(len);
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < len; i++) {
-            boolean isStart = i == 0;
-            fields[i].setAccessible(true);
+        int offset = 0;
 
-            if (fields[i].isAnnotationPresent(BatchIgnore.class)) {
-                map.put(BatchUtils.toStr(fields[i].getName()), BatchConstants.DEFAULT_IGNORE);
-                continue;
-            }
+        try {
+            for (int i = 0; i < len; i++) {
+                boolean isStart = i == offset;
+                fields[i].setAccessible(true);
 
-            if (fields[i].isAnnotationPresent(BatchId.class)) {
-                BatchId batchId = fields[i].getAnnotation(BatchId.class);
-                String id = batchId.value();
-                int type = batchId.type().getKey();
-
-                if (type != BatchIdEnum.AUTO.getKey()) {
-                    map.put(BatchUtils.toStr(id), batchId.type().getValue());
-                    this.appends(sb, id, this.mark, isStart);
+                if (BatchUtils.isStatic(fields[i])) {
+                    if (i == 0 && offset == 0) {
+                        offset = 1;
+                    }
+                    continue;
                 }
-                continue;
-            }
 
-            if (fields[i].isAnnotationPresent(BatchColumns.class)) {
-                BatchColumns batchColumns = fields[i].getAnnotation(BatchColumns.class);
-                map.put(BatchUtils.toStr(batchColumns.value()), BatchConstants.DEFAULT_VALUE);
-                this.appends(sb, batchColumns.value(), this.mark, isStart);
-                continue;
-            }
+                if (fields[i].isAnnotationPresent(BatchIgnore.class)) {
+                    map.put(BatchUtils.toStr(fields[i].getName()), BatchConstants.DEFAULT_IGNORE);
+                    continue;
+                }
 
-            if (fields[i].isAnnotationPresent(BatchFill.class)) {
-                BatchFill batchFill = fields[i].getAnnotation(BatchFill.class);
-                if (batchFill.insert()) {
-                    String name = batchFill.value();
-                    Map<String, Object> beanMap = (Map)BatchBean.getBean(BatchConstants.FILL_NAME_INSERT);
-                    map.put(BatchUtils.toStr(name), beanMap.get(batchFill.value()));
-                    this.appends(sb, name, this.mark, isStart);
+                if (fields[i].isAnnotationPresent(BatchId.class)) {
+                    BatchId batchId = fields[i].getAnnotation(BatchId.class);
+                    String id = batchId.value();
+                    int type = batchId.type().getKey();
+
+                    if (type != BatchIdEnum.AUTO.getKey()) {
+                        map.put(BatchUtils.toStr(id), batchId.type().getValue());
+                        this.appends(sb, id, this.mark, isStart);
+                    }
+                    continue;
+                }
+
+                if (fields[i].isAnnotationPresent(BatchColumns.class)) {
+                    BatchColumns batchColumns = fields[i].getAnnotation(BatchColumns.class);
+                    map.put(BatchUtils.toStr(batchColumns.value()), BatchConstants.DEFAULT_VALUE);
+                    this.appends(sb, batchColumns.value(), this.mark, isStart);
+                    continue;
+                }
+
+                if (fields[i].isAnnotationPresent(BatchFill.class)) {
+                    BatchFill batchFill = fields[i].getAnnotation(BatchFill.class);
+                    if (batchFill.insert()) {
+                        String name = batchFill.value();
+                        Map<String, HotPot> beanMap = (Map)BatchBean.getBean(BatchConstants.FILL_NAME_INSERT);
+                        HotPot hotPot = beanMap.get(name);
+
+                        Class bean = hotPot.getClazz();
+                        String method = hotPot.getMethod();
+                        if (bean != null && !StringUtils.isEmpty(method)) {
+                            Method md = bean.getMethod(method, null);
+                            map.put(BatchUtils.toStr(name), md.invoke(bean, null));
+                        } else {
+                            map.put(BatchUtils.toStr(name), hotPot.getVal());
+                        }
+                        this.appends(sb, name, this.mark, isStart);
+                        continue;
+                    }
+                }
+
+                if (fields[i].isAnnotationPresent(BatchLogic.class)) {
+                    BatchLogic batchLogic = fields[i].getAnnotation(BatchLogic.class);
+                    map.put(BatchUtils.toStr(batchLogic.value()), batchLogic.before());
+                    this.appends(sb, batchLogic.value(), this.mark, isStart);
                     continue;
                 }
             }
-
-            if (fields[i].isAnnotationPresent(BatchLogic.class)) {
-                BatchLogic batchLogic = fields[i].getAnnotation(BatchLogic.class);
-                map.put(BatchUtils.toStr(batchLogic.value()), batchLogic.before());
-                this.appends(sb, batchLogic.value(), this.mark, isStart);
-                continue;
-            }
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
         }
-        System.out.println(sb.toString());
         String values = this.getLatterHalf(list, map);
-        System.out.println(values);
-        // return String.format(BatchSqlEnum.INSERT_LIST.getSql(), tableName, sb.toString(), values);
-        return null;
-    }
-
-    public static void main(String[] args) {
-        List<User> list = new ArrayList<>();
-
-        User user = new User();
-        user.setId(1L);
-        // user.setName(null);
-        user.setAge(15);
-
-        list.add(user);
-
-        User user1 = new User();
-        user1.setId(1L);
-        user1.setName("张三");
-        user1.setAge(15);
-        list.add(user1);
-
-        BatchService batchService = new BatchServiceImpl();
-        batchService.insertBatch(list);
+        return String.format(BatchSqlEnum.INSERT_LIST.getSql(), tableName, sb.toString(), values);
     }
 
     /**
@@ -125,17 +124,25 @@ public class BatchInsertTemplate extends AbstractTemplate {
     private String getLatterHalf(List list, Map<String, Object> map) {
         StringBuilder builder = new StringBuilder();
         int size = list.size();
+        int offset = 0;
 
         try {
             for (int k = 0; k < size; k++) {
                 boolean isEnd = k == 0;
-                Field[] fields = list.get(k).getClass().getDeclaredFields();
+                Field[] fields = super.getField(list.get(k).getClass());
                 this.appends(builder, BatchConstants.LEFT_PARENTHESIS, this.mark, isEnd);
 
                 int len = fields.length;
                 for (int i = 0; i < len; i++) {
-                    boolean isLast = i == 0;
+                    boolean isLast = i == offset;
                     fields[i].setAccessible(true);
+
+                    if (BatchUtils.isStatic(fields[i])) {
+                        if (i == 0 && offset == 0) {
+                            offset = 1;
+                        }
+                        continue;
+                    }
 
                     String name = map.get(fields[i].getName()).toString();
                     if (BatchConstants.DEFAULT_IGNORE.equals(name)) {

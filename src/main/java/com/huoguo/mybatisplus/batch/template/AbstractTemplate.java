@@ -2,7 +2,9 @@ package com.huoguo.mybatisplus.batch.template;
 
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.huoguo.mybatisplus.batch.annotation.BatchName;
+import com.huoguo.mybatisplus.batch.annotation.BatchSuper;
 import com.huoguo.mybatisplus.batch.constant.BatchConstants;
+import com.huoguo.mybatisplus.batch.util.BatchUtils;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 
@@ -30,7 +32,7 @@ public abstract class AbstractTemplate {
         if (list == null || list.isEmpty()) {
             throw new RuntimeException("The current collection is empty");
         }
-        return splitList(list, size);
+        return this.splitList(list, size);
     }
 
     /**
@@ -44,17 +46,17 @@ public abstract class AbstractTemplate {
         int total = list.size();
 
         if (total <= size) {
-            return doSth(list);
+            return this.handle(list);
         }
 
         int limit = total / size;
         int residue = total % size;
         Boolean mark = false;
         for (int i = 0; i < limit; i++) {
-            mark = doSth(list.subList(i * size, size * (i + 1)));
+            mark = this.handle(list.subList(i * size, size * (i + 1)));
         }
         if (residue > 0) {
-            mark = doSth(list.subList(limit * size, total));
+            mark = this.handle(list.subList(limit * size, total));
         }
         return mark;
     }
@@ -65,13 +67,11 @@ public abstract class AbstractTemplate {
      * @param list 数据集合
      * @return 是否成功
      */
-    private Boolean doSth(List<?> list) {
-        Class<?> clazz = getClazz(list);
-        String tableName = getTableName(clazz);
-        Field[] fields = clazz.getDeclaredFields();
-        String sql = getSql(list, fields, tableName);
-        // return execute(sql, clazz);
-        return true;
+    private Boolean handle(List<?> list) {
+        Class<?> clazz = this.getClazz(list);
+        String tableName = this.getTableName(clazz);
+        String sql = this.getSql(list, this.getField(clazz), tableName);
+        return execute(sql, clazz);
     }
 
     /**
@@ -82,6 +82,30 @@ public abstract class AbstractTemplate {
      */
     private Class<?> getClazz(List<?> list) {
         return list.get(BatchConstants.DEFAULT_INDEX_VALUE).getClass();
+    }
+
+    /**
+     * 获取对象数据
+     * @param clazz 当前对象
+     * @return 数组
+     */
+    public Field[] getField(Class<?> clazz) {
+        Class<?> superClass = this.isSuper(clazz);
+        if (superClass != null && superClass.isAnnotationPresent(BatchSuper.class)) {
+            return BatchUtils.concat(clazz.getDeclaredFields(), superClass.getDeclaredFields());
+        }
+        return clazz.getDeclaredFields();
+    }
+
+    /**
+     * 获取当前对象的父类对象
+     *
+     * @param clazz 当前对象
+     * @return 父类对象
+     */
+    private Class<?> isSuper(Class<?> clazz) {
+        Class<?> superClazz = clazz.getSuperclass();
+        return superClazz != null && superClazz != Object.class ? superClazz : null;
     }
 
     /**

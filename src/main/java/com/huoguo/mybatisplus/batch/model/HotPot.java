@@ -7,34 +7,34 @@ package com.huoguo.mybatisplus.batch.model;
 public class HotPot {
 
     /** 类名 **/
-    private String className;
+    private Class<?> clazz;
 
     /** 方法名 **/
-    private String methodName;
+    private String method;
 
     /** 实际的值 **/
     private Object val;
 
-    HotPot(String className, String methodName, Object val) {
-        this.className = className;
-        this.methodName = methodName;
+    public HotPot(Class<?> clazz, String method, Object val) {
+        this.clazz = clazz;
+        this.method = method;
         this.val = val;
     }
 
-    public String getClassName() {
-        return className;
+    public Class<?> getClazz() {
+        return clazz;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setClazz(Class<?> clazz) {
+        this.clazz = clazz;
     }
 
-    public String getMethodName() {
-        return methodName;
+    public String getMethod() {
+        return method;
     }
 
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public Object getVal() {
