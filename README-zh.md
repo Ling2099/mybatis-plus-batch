@@ -103,11 +103,12 @@
 
 ```
 1.如果使用自动填充功能，需要实现BatchFillService接口，配置需要自动填充的字段名、执行类、执行方法或值，并注入Bean，其名称为insert/update  
-2.HotPot对象
+2.将BatchBean类注入Spring容器中
+3.HotPot对象
 - 参数一：需要填充字段值的类Class，可以为null，代表给其字段死值，而非程序运行时计算得到
 - 参数二：需要填充字段值的类方法名，可以为null，同上
 - 参数三：若前两个参数为null时，代表其值是固定的，填上即可  
-3.将BatchBean类注入Spring容器中
+
 
 ```
     @Data
