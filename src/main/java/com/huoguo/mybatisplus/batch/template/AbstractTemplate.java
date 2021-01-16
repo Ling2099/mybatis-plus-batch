@@ -89,7 +89,7 @@ public abstract class AbstractTemplate {
      * @param clazz 当前对象
      * @return 数组
      */
-    public Field[] getField(Class<?> clazz) {
+    protected Field[] getField(Class<?> clazz) {
         Class<?> superClass = this.isSuper(clazz);
         if (superClass != null && superClass.isAnnotationPresent(BatchSuper.class)) {
             return BatchUtils.concat(clazz.getDeclaredFields(), superClass.getDeclaredFields());

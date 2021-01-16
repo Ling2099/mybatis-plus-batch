@@ -32,10 +32,7 @@ public final class BatchUtils {
      * @return true代表当前属性为序列化ID
      */
     public static Boolean isStatic(Field field) {
-        if (Modifier.isStatic(field.getModifiers())) {
-            return true;
-        }
-        return false;
+        return Modifier.isStatic(field.getModifiers());
     }
 
     /**

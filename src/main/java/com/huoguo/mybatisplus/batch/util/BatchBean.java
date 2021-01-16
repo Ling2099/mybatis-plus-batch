@@ -30,7 +30,7 @@ public class BatchBean implements ApplicationContextAware {
      * 获取 ApplicationContext
      * @return ApplicationContext
      */
-    public static ApplicationContext getApplicationContext() {
+    private static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
 

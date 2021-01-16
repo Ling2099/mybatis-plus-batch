@@ -55,7 +55,7 @@ public class BatchSnow {
     public synchronized static long genId(){
         long now = System.currentTimeMillis();
 
-        //如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
+        // 如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
         if (now < LAST_TIME_STAMP) {
             throw new RuntimeException(String.format("系统时间错误！ %d 毫秒内拒绝生成雪花ID！", START_TIME - now));
         }
@@ -69,7 +69,7 @@ public class BatchSnow {
             LAST_SEQ = 0;
         }
 
-        //上次生成ID的时间截
+        // 上次生成ID的时间截
         LAST_TIME_STAMP = now;
 
         return ((now - START_TIME) << TIME_LEFT_BIT) | (DATA_ID << DATA_LEFT_BIT) | (WORK_ID << WORK_LEFT_BIT) | LAST_SEQ;
@@ -81,7 +81,7 @@ public class BatchSnow {
      * @param lastMillis 毫秒
      * @return 下一个不同毫秒时间戳
      */
-    public static long nextMillis(long lastMillis) {
+    private static long nextMillis(long lastMillis) {
         long now = System.currentTimeMillis();
         while (now <= lastMillis) {
             now = System.currentTimeMillis();
@@ -108,7 +108,7 @@ public class BatchSnow {
      * 根据 host address 取余，发生异常就获取 0到31之间的随机数
      * @return 数值
      */
-    public static int getWorkId(){
+    private static int getWorkId(){
         try {
             return getHostId(Inet4Address.getLocalHost().getHostAddress(), WORK_MAX_NUM);
         } catch (UnknownHostException e) {
@@ -120,7 +120,7 @@ public class BatchSnow {
      * 根据 host name 取余，发生异常就获取 0到31之间的随机数
      * @return 数值
      */
-    public static int getDataId() {
+    private static int getDataId() {
         try {
             return getHostId(Inet4Address.getLocalHost().getHostName(), DATA_MAX_NUM);
         } catch (UnknownHostException e) {
