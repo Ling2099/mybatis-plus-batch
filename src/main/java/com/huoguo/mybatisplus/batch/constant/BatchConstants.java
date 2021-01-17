@@ -38,12 +38,15 @@ public final class BatchConstants {
     public static final String LOGIC_VALUE = "logic_value";
 
     /** 默认ID策略 用户默认输入 **/
+    @Deprecated
     public static final String DEFAULT_INPUT = "INPUT";
 
     /** 默认ID策略 雪花ID **/
+    @Deprecated
     public static final String DEFAULT_ASSIGN_ID = "ASSIGN_ID";
 
     /** 默认ID策略 UUID **/
+    @Deprecated
     public static final String DEFAULT_ASSIGN_UUID = "ASSIGN_UUID";
 
     /** 默认忽略字段 **/
@@ -52,9 +55,20 @@ public final class BatchConstants {
     /** 默认字段列值 **/
     public static final String DEFAULT_VALUE = "DEFAULT";
 
+    /** 默认SQL条件拼接字段 **/
+    public static final String DEFAULT_EQUAL = " = ";
+
+    /** 默认SQL条件拼接字段 **/
+    public static final String DEFAULT_AND = "AND ";
+
+    /** 默认SQL条件拼接字段 **/
+    public static final String DEFAULT_IN = " IN ";
+
     /** 默认新增填充Bean Name **/
+    @Deprecated
     public static final String FILL_NAME_INSERT = "insert";
 
     /** 默认修改填充Bean Name **/
+    @Deprecated
     public static final String FILL_NAME_UPDATE = "update";
 }

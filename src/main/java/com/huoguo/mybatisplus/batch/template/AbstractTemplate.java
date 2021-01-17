@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.huoguo.mybatisplus.batch.annotation.BatchName;
 import com.huoguo.mybatisplus.batch.annotation.BatchSuper;
 import com.huoguo.mybatisplus.batch.constant.BatchConstants;
+import com.huoguo.mybatisplus.batch.model.Splicer;
 import com.huoguo.mybatisplus.batch.util.BatchUtils;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
@@ -24,39 +25,42 @@ public abstract class AbstractTemplate {
     /**
      * 模板模式对外提供的方法
      *
-     * @param list 数据集合
-     * @param size 每次批量操作的数据集合大小
+     * @param list    数据集合
+     * @param size    每次批量操作的数据集合大小
+     * @param clazz   类实例
+     * @param splicer 条件构造器
      * @return 是否成功
      */
-    public Boolean bacth(List<?> list, int size) {
+    public Boolean bacth(List<?> list, int size, Class<?> clazz, Splicer splicer) {
         if (list == null || list.isEmpty()) {
             throw new RuntimeException("The current collection is empty");
         }
-        return this.splitList(list, size);
+        return this.splitList(list, size, clazz == null ? this.getClazz(list) : clazz, splicer);
     }
 
     /**
      * 拆分数据集合
      *
-     * @param list 数据集合
-     * @param size 每次批量操作的数据集合大小
+     * @param list    数据集合
+     * @param size    每次批量操作的数据集合大小
+     * @param splicer 条件构造器
      * @return 是否成功
      */
-    private Boolean splitList(List<?> list, int size) {
+    private Boolean splitList(List<?> list, int size, Class<?> clazz, Splicer splicer) {
         int total = list.size();
 
         if (total <= size) {
-            return this.handle(list);
+            return this.handle(list, clazz, splicer);
         }
 
         int limit = total / size;
         int residue = total % size;
         Boolean mark = false;
         for (int i = 0; i < limit; i++) {
-            mark = this.handle(list.subList(i * size, size * (i + 1)));
+            mark = this.handle(list.subList(i * size, size * (i + 1)), clazz, splicer);
         }
         if (residue > 0) {
-            mark = this.handle(list.subList(limit * size, total));
+            mark = this.handle(list.subList(limit * size, total), clazz, splicer);
         }
         return mark;
     }
@@ -64,14 +68,15 @@ public abstract class AbstractTemplate {
     /**
      * 获取表名、列名、相对应的值，用此来拼接SQL，并执行数据库操作
      *
-     * @param list 数据集合
+     * @param list    数据集合
+     * @param clazz   类实例
+     * @param splicer 条件构造器
      * @return 是否成功
      */
-    private Boolean handle(List<?> list) {
-        Class<?> clazz = this.getClazz(list);
-        String tableName = this.getTableName(clazz);
-        String sql = this.getSql(list, this.getField(clazz), tableName);
-        return execute(sql, clazz);
+    private Boolean handle(List<?> list, Class<?> clazz, Splicer splicer) {
+        String sql = this.getSql(list, this.getField(clazz), this.getTableName(clazz), splicer);
+        // return execute(sql, clazz);
+        return true;
     }
 
     /**
@@ -127,9 +132,10 @@ public abstract class AbstractTemplate {
      * @param list      数据集合
      * @param fields    类的属性数组
      * @param tableName 表名
+     * @param splicer   条件构造器
      * @return 可执行的SQL
      */
-    protected abstract String getSql(List<?> list, Field[] fields, String tableName);
+    protected abstract String getSql(List<?> list, Field[] fields, String tableName, Splicer splicer);
 
     /**
      * 执行数据库操作

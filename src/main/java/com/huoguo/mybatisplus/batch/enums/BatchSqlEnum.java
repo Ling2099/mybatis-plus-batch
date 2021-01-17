@@ -7,27 +7,24 @@ package com.huoguo.mybatisplus.batch.enums;
 public enum BatchSqlEnum {
 
     /** 新增 **/
-    INSERT_LIST("insert", "插入集合数据", "INSERT INTO %s (%s) VALUES %s"),
+    INSERT_LIST("insert", "INSERT INTO %s (%s) VALUES %s"),
+
+    /** 编辑 **/
+    UPDATE_LIST("update", ""),
 
     /** 删除 **/
-    DELETE_LIST("delete", "逻辑删除数据", "DELETE FROM $s WHERE 1 = 1 $s");
+    DELETE_LIST("delete", "UPDATE %s SET %s WHERE 1 = 1 %s");
 
     private final String method;
-    private final String desc;
     private final String sql;
 
-    BatchSqlEnum(String method, String desc, String sql) {
+    BatchSqlEnum(String method, String sql) {
         this.method = method;
-        this.desc = desc;
         this.sql = sql;
     }
 
     public String getMethod() {
         return this.method;
-    }
-
-    public String getDesc() {
-        return this.desc;
     }
 
     public String getSql() {

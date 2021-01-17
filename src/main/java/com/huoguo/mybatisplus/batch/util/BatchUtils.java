@@ -1,5 +1,7 @@
 package com.huoguo.mybatisplus.batch.util;
 
+import org.springframework.util.StringUtils;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
@@ -86,6 +88,24 @@ public final class BatchUtils {
             return null == value ? "null" : "'" + value + "'";
         } else {
             return type.cast(value);
+        }
+    }
+
+    /**
+     * StringBuilder拼接SQL字符串
+     * @param sb StringBuilder
+     * @param val 字段、值或括号
+     * @param str 逗号
+     * @param isLast 是否为最后一行数据
+     */
+    public static void appends(StringBuilder sb, Object val, String str, boolean isLast) {
+        if (!isLast) {
+            if (!StringUtils.isEmpty(str)) {
+                sb.append(str);
+            }
+        }
+        if (!StringUtils.isEmpty(val)) {
+            sb.append(val);
         }
     }
 }

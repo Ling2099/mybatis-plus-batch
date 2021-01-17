@@ -1,8 +1,10 @@
 package com.huoguo.mybatisplus.batch.service.impl;
 
 import com.huoguo.mybatisplus.batch.constant.BatchConstants;
+import com.huoguo.mybatisplus.batch.model.Splicer;
 import com.huoguo.mybatisplus.batch.service.BatchService;
 import com.huoguo.mybatisplus.batch.template.AbstractTemplate;
+import com.huoguo.mybatisplus.batch.template.child.BatchDeleteTemplate;
 import com.huoguo.mybatisplus.batch.template.child.BatchInsertTemplate;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class BatchServiceImpl implements BatchService {
     @Override
     public Boolean insertBatch(List<?> list) {
         AbstractTemplate insert = new BatchInsertTemplate();
-        return insert.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE);
+        return insert.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, null, null);
     }
 
     /**
@@ -33,7 +35,7 @@ public class BatchServiceImpl implements BatchService {
     @Override
     public Boolean insertBatch(List<?> list, int size) {
         AbstractTemplate insert = new BatchInsertTemplate();
-        return insert.bacth(list, size);
+        return insert.bacth(list, size, null, null);
     }
 
     /**
@@ -41,10 +43,10 @@ public class BatchServiceImpl implements BatchService {
      * @param list 数据集合
      * @return
      */
-    @Deprecated
     @Override
     public Boolean deleteBatch(List<?> list) {
-        return null;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, null, null);
     }
 
     /**
@@ -53,34 +55,63 @@ public class BatchServiceImpl implements BatchService {
      * @param size 每次数据操作的集合大小
      * @return
      */
-    @Deprecated
     @Override
     public Boolean deleteBatch(List<?> list, int size) {
-        return null;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, size, null, null);
     }
 
     /**
      * 批量删除
      * @param list 数据集合
-     * @param clazz 映射的对象
-     * @return 是否成功
+     * @param clazz 类实例
+     * @return
      */
-    @Deprecated
     @Override
-    public Boolean deleteBatch(List<?> list, Class clazz) {
-        return null;
+    public Boolean deleteBatch(List<?> list, Class<?> clazz) {
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, clazz, null);
     }
 
     /**
      * 批量删除
      * @param list 数据集合
-     * @param clazz 映射的对象
      * @param size 每次写操作的数据集合大小
-     * @return 是否成功
+     * @param clazz 类实例
+     * @return
      */
-    @Deprecated
     @Override
-    public Boolean deleteBatch(List<?> list, Class clazz, int size) {
-        return null;
+    public Boolean deleteBatch(List<?> list, int size, Class<?> clazz) {
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, size, clazz, null);
     }
+
+    /**
+     * 批量删除
+     * @param list 数据集合
+     * @param size 每次数据操作的集合大小
+     * @param splicer 条件构造器
+     * @return
+     */
+    @Override
+    public Boolean deleteBatch(List<?> list, int size, Splicer splicer) {
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, null, splicer);
+    }
+
+    /**
+     * 批量删除
+     * @param list 数据集合
+     * @param size 每次数据操作的集合大小
+     * @param splicer 条件构造器
+     * @param clazz 类实例
+     * @return
+     */
+    @Override
+    public Boolean deleteBatch(List<?> list, int size, Splicer splicer, Class<?> clazz) {
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, size, clazz, splicer);
+    }
+
+
 }
