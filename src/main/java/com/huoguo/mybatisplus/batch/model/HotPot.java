@@ -2,6 +2,7 @@ package com.huoguo.mybatisplus.batch.model;
 
 /**
  * 存储运行时所执行的类名、方法名或值的实体类
+ *
  * @author Lizhenghuang
  */
 public class HotPot {

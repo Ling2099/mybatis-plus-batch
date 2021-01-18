@@ -4,6 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * 数据库表的列名注解
+ *
  * @author Lizhenghuang
  */
 @Documented
@@ -13,6 +14,7 @@ public @interface BatchColumns {
 
     /**
      * 注解默认值
+     *
      * @return 列名字符串
      */
     String value() default "";

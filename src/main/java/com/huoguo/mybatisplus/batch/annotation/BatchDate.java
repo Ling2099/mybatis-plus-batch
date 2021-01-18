@@ -6,6 +6,7 @@ import java.lang.annotation.*;
 
 /**
  * 数据库日期类型字段注解
+ *
  * @author Lizhenghuang
  */
 @Deprecated
@@ -16,12 +17,14 @@ public @interface BatchDate {
 
     /**
      * 注解默认值
+     *
      * @return 列名字符串
      */
     String value() default "";
 
     /**
      * 注解默认值
+     *
      * @return 数据类型
      */
     BatchDateEnum type() default BatchDateEnum.INPUT;

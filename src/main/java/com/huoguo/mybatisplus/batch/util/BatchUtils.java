@@ -17,9 +17,10 @@ public final class BatchUtils {
 
     /**
      * 合并数组
-     * @param first 第一个数组
+     *
+     * @param first  第一个数组
      * @param second 第二个数组
-     * @param <T> 泛型
+     * @param <T>    泛型
      * @return 新的数组
      */
     public static <T> T[] concat(T[] first, T[] second) {
@@ -30,6 +31,7 @@ public final class BatchUtils {
 
     /**
      * 在反射时，排除掉序列化ID
+     *
      * @param field 当前对象属性
      * @return true代表当前属性为序列化ID
      */
@@ -39,6 +41,7 @@ public final class BatchUtils {
 
     /**
      * 转换数据库与实体类映射字段
+     *
      * @param str 数据库字段
      * @return 实体类属性
      */
@@ -93,9 +96,10 @@ public final class BatchUtils {
 
     /**
      * StringBuilder拼接SQL字符串
-     * @param sb StringBuilder
-     * @param val 字段、值或括号
-     * @param str 逗号
+     *
+     * @param sb     StringBuilder
+     * @param val    字段、值或括号
+     * @param str    逗号
      * @param isLast 是否为最后一行数据
      */
     public static void appends(StringBuilder sb, Object val, String str, boolean isLast) {
@@ -106,6 +110,18 @@ public final class BatchUtils {
         }
         if (!StringUtils.isEmpty(val)) {
             sb.append(val);
+        }
+    }
+
+    /**
+     * 字符串拼接
+     *
+     * @param sb      StringBuilder
+     * @param objects Object数组
+     */
+    public static void appends(StringBuilder sb, Object... objects) {
+        for (Object obj : objects) {
+            sb.append(obj);
         }
     }
 }

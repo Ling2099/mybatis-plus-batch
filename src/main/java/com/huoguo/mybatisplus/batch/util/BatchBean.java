@@ -16,6 +16,7 @@ public class BatchBean implements ApplicationContextAware {
 
     /**
      * 获取Spring容器
+     *
      * @param applicationContext Spring容器
      * @throws BeansException 异常抛出
      */
@@ -28,6 +29,7 @@ public class BatchBean implements ApplicationContextAware {
 
     /**
      * 获取 ApplicationContext
+     *
      * @return ApplicationContext
      */
     private static ApplicationContext getApplicationContext() {
@@ -36,31 +38,34 @@ public class BatchBean implements ApplicationContextAware {
 
     /**
      * 通过name获取Spring容器Bean
+     *
      * @param name 字符串
      * @return Bean
      */
-    public static Object getBean(String name){
+    public static Object getBean(String name) {
         return getApplicationContext().getBean(name);
     }
 
     /**
      * 通过Class获取Spring容器Bean
+     *
      * @param clazz Class
-     * @param <T> 泛型化的Bean
+     * @param <T>   泛型化的Bean
      * @return Bean
      */
-    public static <T> T getBean(Class<T> clazz){
+    public static <T> T getBean(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
     }
 
     /**
      * 通过指定name和Class获取Spring容器Bean
-     * @param name 字符串
+     *
+     * @param name  字符串
      * @param clazz Class
-     * @param <T> 泛型
+     * @param <T>   泛型
      * @return Bean
      */
-    public static <T> T getBean(String name, Class<T> clazz){
+    public static <T> T getBean(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);
     }
 }

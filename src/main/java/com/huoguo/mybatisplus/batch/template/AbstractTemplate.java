@@ -75,8 +75,7 @@ public abstract class AbstractTemplate {
      */
     private Boolean handle(List<?> list, Class<?> clazz, Splicer splicer) {
         String sql = this.getSql(list, this.getField(clazz), this.getTableName(clazz), splicer);
-        // return execute(sql, clazz);
-        return true;
+        return execute(sql, clazz);
     }
 
     /**

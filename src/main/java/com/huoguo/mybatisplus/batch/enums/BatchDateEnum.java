@@ -2,6 +2,7 @@ package com.huoguo.mybatisplus.batch.enums;
 
 /**
  * 日期类型枚举
+ *
  * @author Lizhenghuang
  */
 @Deprecated

@@ -2,6 +2,7 @@ package com.huoguo.mybatisplus.batch.enums;
 
 /**
  * SQL片段枚举类
+ *
  * @author Lizhenghuang
  */
 public enum BatchSqlEnum {

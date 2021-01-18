@@ -86,7 +86,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
                     BatchFill batchFill = fields[i].getAnnotation(BatchFill.class);
                     if (batchFill.insert()) {
                         String name = batchFill.value();
-                        Map<String, HotPot> beanMap = (Map)BatchBean.getBean(BatchSqlEnum.INSERT_LIST.getMethod());
+                        Map<String, HotPot> beanMap = (Map) BatchBean.getBean(BatchSqlEnum.INSERT_LIST.getMethod());
                         HotPot hotPot = beanMap.get(name);
 
                         Class bean = hotPot.getClazz();
@@ -129,9 +129,8 @@ public class BatchInsertTemplate extends AbstractTemplate {
 
         try {
             for (int k = 0; k < size; k++) {
-                boolean isEnd = k == 0;
                 Field[] fields = super.getField(list.get(k).getClass());
-                BatchUtils.appends(builder, BatchConstants.LEFT_PARENTHESIS, this.mark, isEnd);
+                BatchUtils.appends(builder, BatchConstants.LEFT_PARENTHESIS, this.mark, k == 0);
 
                 int len = fields.length;
                 for (int i = 0; i < len; i++) {

@@ -6,6 +6,7 @@ import java.lang.annotation.*;
 
 /**
  * 数据库主键字段注解
+ *
  * @author Lizhenghuang
  */
 @Documented
@@ -15,12 +16,14 @@ public @interface BatchId {
 
     /**
      * 注解默认值
+     *
      * @return 列名字符串
      */
     String value() default "";
 
     /**
      * 注解默认值
+     *
      * @return 字段烈性
      */
     BatchIdEnum type() default BatchIdEnum.INPUT;

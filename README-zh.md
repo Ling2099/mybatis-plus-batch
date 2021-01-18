@@ -95,7 +95,6 @@
         @Override
         public Map<String, HotPot> batchUpdateFill() {
             // TODO
-            
             return null;
         }
     }
@@ -155,6 +154,15 @@
         return batchService.insertBatch(list);
     }
 ```
+- 批量新增
+
+```
+    public Boolean test(String[] ids) {
+        BatchService batchService = new BatchServiceImpl();
+        return batchService.deleteBatch(Arrays.asList(ids));
+    }
+```
+- 批量删除
 
 ```xml
 <dependency>
