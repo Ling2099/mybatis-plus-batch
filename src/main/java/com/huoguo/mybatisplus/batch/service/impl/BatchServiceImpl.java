@@ -41,7 +41,7 @@ public class BatchServiceImpl implements BatchService {
     /**
      * 批量删除
      * @param list 数据集合
-     * @return
+     * @return 是否成功
      */
     @Override
     public Boolean deleteBatch(List<?> list) {
@@ -53,7 +53,7 @@ public class BatchServiceImpl implements BatchService {
      * 批量删除
      * @param list 数据集合
      * @param size 每次数据操作的集合大小
-     * @return
+     * @return 是否成功
      */
     @Override
     public Boolean deleteBatch(List<?> list, int size) {
@@ -63,9 +63,9 @@ public class BatchServiceImpl implements BatchService {
 
     /**
      * 批量删除
-     * @param list 数据集合
+     * @param list  数据集合
      * @param clazz 类实例
-     * @return
+     * @return 是否成功
      */
     @Override
     public Boolean deleteBatch(List<?> list, Class<?> clazz) {
@@ -75,10 +75,10 @@ public class BatchServiceImpl implements BatchService {
 
     /**
      * 批量删除
-     * @param list 数据集合
-     * @param size 每次写操作的数据集合大小
+     * @param list  数据集合
+     * @param size  每次写操作的数据集合大小
      * @param clazz 类实例
-     * @return
+     * @return 是否成功
      */
     @Override
     public Boolean deleteBatch(List<?> list, int size, Class<?> clazz) {
@@ -88,30 +88,53 @@ public class BatchServiceImpl implements BatchService {
 
     /**
      * 批量删除
-     * @param list 数据集合
-     * @param size 每次数据操作的集合大小
+     * @param list    数据集合
      * @param splicer 条件构造器
-     * @return
+     * @return 是否成功
      */
     @Override
-    public Boolean deleteBatch(List<?> list, int size, Splicer splicer) {
+    public Boolean deleteBatch(List<?> list, Splicer splicer) {
         AbstractTemplate delete = new BatchDeleteTemplate();
         return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, null, splicer);
     }
 
     /**
      * 批量删除
-     * @param list 数据集合
-     * @param size 每次数据操作的集合大小
+     * @param list    数据集合
+     * @param size    每次数据操作的集合大小
      * @param splicer 条件构造器
-     * @param clazz 类实例
-     * @return
+     * @return 是否成功
+     */
+    @Override
+    public Boolean deleteBatch(List<?> list, int size, Splicer splicer) {
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, size, null, splicer);
+    }
+
+    /**
+     * 批量删除
+     * @param list    数据集合
+     * @param splicer 条件构造器
+     * @param clazz   类实例
+     * @return 是否成功
+     */
+    @Override
+    public Boolean deleteBatch(List<?> list, Splicer splicer, Class<?> clazz) {
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, clazz, splicer);
+    }
+
+    /**
+     * 批量删除
+     * @param list    数据集合
+     * @param size    每次数据操作的集合大小
+     * @param splicer 条件构造器
+     * @param clazz   类实例
+     * @return 是否成功
      */
     @Override
     public Boolean deleteBatch(List<?> list, int size, Splicer splicer, Class<?> clazz) {
         AbstractTemplate delete = new BatchDeleteTemplate();
         return delete.bacth(list, size, clazz, splicer);
     }
-
-
 }

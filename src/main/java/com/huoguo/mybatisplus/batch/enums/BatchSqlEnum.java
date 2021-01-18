@@ -13,7 +13,7 @@ public enum BatchSqlEnum {
     UPDATE_LIST("update", ""),
 
     /** 删除 **/
-    DELETE_LIST("delete", "UPDATE %s SET %s WHERE 1 = 1 %s");
+    DELETE_LIST("delete", "UPDATE %s SET %s WHERE 1 = 1%s");
 
     private final String method;
     private final String sql;

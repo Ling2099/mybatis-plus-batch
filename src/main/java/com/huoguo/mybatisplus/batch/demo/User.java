@@ -7,17 +7,17 @@ import com.huoguo.mybatisplus.batch.annotation.BatchName;
 import com.huoguo.mybatisplus.batch.enums.BatchIdEnum;
 
 /**
- * @ClassName: User
- * @Description: TODO
- * @Author: LZH
- * @Date: 2021/1/17 18:40
- * @Version: 1.0
+ * 222
+ * @author 456
  */
 @BatchName("user")
 public class User {
 
     @BatchId(value = "id", type = BatchIdEnum.INPUT)
     private Long id;
+
+    @BatchColumns("relation_id")
+    private Long relationId;
 
     @BatchColumns("name")
     private String name;
@@ -47,5 +47,13 @@ public class User {
 
     public void setIsdel(int isdel) {
         this.isdel = isdel;
+    }
+
+    public Long getRelationId() {
+        return relationId;
+    }
+
+    public void setRelationId(Long relationId) {
+        this.relationId = relationId;
     }
 }

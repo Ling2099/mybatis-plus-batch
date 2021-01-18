@@ -145,7 +145,12 @@ public class BatchInsertTemplate extends AbstractTemplate {
                         continue;
                     }
 
-                    String name = map.get(fields[i].getName()).toString();
+                    Object object = map.get(fields[i].getName());
+                    if (object == null) {
+                        continue;
+                    }
+
+                    String name = object.toString();
                     if (BatchConstants.DEFAULT_IGNORE.equals(name)) {
                         continue;
                     }

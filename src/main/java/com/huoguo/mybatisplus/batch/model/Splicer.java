@@ -13,7 +13,7 @@ public class Splicer {
 
     private Map<String, Object> map;
 
-    Splicer () {
+    public Splicer () {
         this.map = new ConcurrentHashMap<>();
     }
 
