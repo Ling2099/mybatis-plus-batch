@@ -16,7 +16,7 @@
 	<name>mybatis-plus-batch</name>
 	<url>https://github.com/Ling2099/mybatis-plus-batch</url>
 	<description>This is Mybatis Plus based batch write operation tool</description>
-	<inceptionYear>2020</inceptionYear>
+	<inceptionYear>2021</inceptionYear>
 
 	<licenses>
 		<license>
