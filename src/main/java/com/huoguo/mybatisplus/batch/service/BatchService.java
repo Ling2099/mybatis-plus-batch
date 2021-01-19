@@ -104,4 +104,13 @@ public interface BatchService {
      */
     Boolean deleteBatch(List<?> list, int size, Splicer splicer, Class<?> clazz);
 
+    /**
+     * 批量更新
+     *
+     * @param list 数据集合
+     * @return
+     */
+    @Deprecated
+    Boolean updateBatch(List<?> list);
+
 }

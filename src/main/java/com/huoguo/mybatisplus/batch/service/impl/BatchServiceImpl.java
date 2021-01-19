@@ -149,4 +149,16 @@ public class BatchServiceImpl implements BatchService {
         AbstractTemplate delete = new BatchDeleteTemplate();
         return delete.bacth(list, size, clazz, splicer);
     }
+
+    /**
+     * 批量更新
+     *
+     * @param list 数据集合
+     * @return
+     */
+    @Deprecated
+    @Override
+    public Boolean updateBatch(List<?> list) {
+        return null;
+    }
 }
