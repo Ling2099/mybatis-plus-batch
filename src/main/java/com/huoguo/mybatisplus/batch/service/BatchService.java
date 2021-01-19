@@ -108,7 +108,7 @@ public interface BatchService {
      * 批量更新
      *
      * @param list 数据集合
-     * @return
+     * @return 是否成功
      */
     @Deprecated
     Boolean updateBatch(List<?> list);

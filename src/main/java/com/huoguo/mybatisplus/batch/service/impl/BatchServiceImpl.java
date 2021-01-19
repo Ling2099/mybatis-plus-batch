@@ -154,7 +154,7 @@ public class BatchServiceImpl implements BatchService {
      * 批量更新
      *
      * @param list 数据集合
-     * @return
+     * @return 是否成功
      */
     @Deprecated
     @Override
