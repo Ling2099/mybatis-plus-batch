@@ -44,17 +44,10 @@ public class BatchInsertTemplate extends AbstractTemplate {
         Map<String, Object> map = new ConcurrentHashMap<>(len);
         StringBuilder sb = new StringBuilder();
 
-        int offset = 0;
-
         try {
             for (int i = 0; i < len; i++) {
-                boolean isStart = i == offset;
                 fields[i].setAccessible(true);
-
                 if (BatchUtils.isStatic(fields[i])) {
-                    if (i == 0 && offset == 0) {
-                        offset = 1;
-                    }
                     continue;
                 }
 
@@ -70,7 +63,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
 
                     if (type != BatchIdEnum.AUTO.getKey()) {
                         map.put(BatchUtils.toStr(id), batchId.type().getValue());
-                        BatchUtils.appends(sb, id, this.mark, isStart);
+                        BatchUtils.appends(sb, id, this.mark, i == 0);
                     }
                     continue;
                 }
@@ -78,7 +71,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
                 if (fields[i].isAnnotationPresent(BatchColumns.class)) {
                     BatchColumns batchColumns = fields[i].getAnnotation(BatchColumns.class);
                     map.put(BatchUtils.toStr(batchColumns.value()), BatchConstants.DEFAULT_VALUE);
-                    BatchUtils.appends(sb, batchColumns.value(), this.mark, isStart);
+                    BatchUtils.appends(sb, batchColumns.value(), this.mark, i == 0);
                     continue;
                 }
 
@@ -97,7 +90,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
                         } else {
                             map.put(BatchUtils.toStr(name), hotPot.getVal());
                         }
-                        BatchUtils.appends(sb, name, this.mark, isStart);
+                        BatchUtils.appends(sb, name, this.mark, i == 0);
                         continue;
                     }
                 }
@@ -105,7 +98,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
                 if (fields[i].isAnnotationPresent(BatchLogic.class)) {
                     BatchLogic batchLogic = fields[i].getAnnotation(BatchLogic.class);
                     map.put(BatchUtils.toStr(batchLogic.value()), batchLogic.before());
-                    BatchUtils.appends(sb, batchLogic.value(), this.mark, isStart);
+                    BatchUtils.appends(sb, batchLogic.value(), this.mark, i == 0);
                 }
             }
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
@@ -125,7 +118,6 @@ public class BatchInsertTemplate extends AbstractTemplate {
     private String getLatterHalf(List list, Map<String, Object> map) {
         StringBuilder builder = new StringBuilder();
         int size = list.size();
-        int offset = 0;
 
         try {
             for (int k = 0; k < size; k++) {
@@ -134,13 +126,8 @@ public class BatchInsertTemplate extends AbstractTemplate {
 
                 int len = fields.length;
                 for (int i = 0; i < len; i++) {
-                    boolean isLast = i == offset;
                     fields[i].setAccessible(true);
-
                     if (BatchUtils.isStatic(fields[i])) {
-                        if (i == 0 && offset == 0) {
-                            offset = 1;
-                        }
                         continue;
                     }
 
@@ -156,10 +143,10 @@ public class BatchInsertTemplate extends AbstractTemplate {
                     Object obj = this.setVal(name);
 
                     if (obj != null) {
-                        BatchUtils.appends(builder, BatchUtils.getValue(fields[i].getType(), obj), this.mark, isLast);
+                        BatchUtils.appends(builder, BatchUtils.getValue(fields[i].getType(), obj), this.mark, i == 0);
                         continue;
                     }
-                    BatchUtils.appends(builder, BatchUtils.getValue(fields[i].getType(), fields[i].get(list.get(k))), this.mark, isLast);
+                    BatchUtils.appends(builder, BatchUtils.getValue(fields[i].getType(), fields[i].get(list.get(k))), this.mark, i == 0);
                 }
                 BatchUtils.appends(builder, BatchConstants.RIGHT_PARENTHESIS, null, false);
             }
