@@ -63,7 +63,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
 
                     if (type != BatchIdEnum.AUTO.getKey()) {
                         map.put(BatchUtils.toStr(id), batchId.type().getValue());
-                        BatchUtils.appends(sb, id, this.mark, i == 0);
+                        BatchUtils.appends(sb, id, this.mark, sb.length() == 0);
                     }
                     continue;
                 }
@@ -71,7 +71,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
                 if (fields[i].isAnnotationPresent(BatchColumns.class)) {
                     BatchColumns batchColumns = fields[i].getAnnotation(BatchColumns.class);
                     map.put(BatchUtils.toStr(batchColumns.value()), BatchConstants.DEFAULT_VALUE);
-                    BatchUtils.appends(sb, batchColumns.value(), this.mark, i == 0);
+                    BatchUtils.appends(sb, batchColumns.value(), this.mark, sb.length() == 0);
                     continue;
                 }
 
@@ -90,7 +90,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
                         } else {
                             map.put(BatchUtils.toStr(name), hotPot.getVal());
                         }
-                        BatchUtils.appends(sb, name, this.mark, i == 0);
+                        BatchUtils.appends(sb, name, this.mark, sb.length() == 0);
                         continue;
                     }
                 }
@@ -98,7 +98,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
                 if (fields[i].isAnnotationPresent(BatchLogic.class)) {
                     BatchLogic batchLogic = fields[i].getAnnotation(BatchLogic.class);
                     map.put(BatchUtils.toStr(batchLogic.value()), batchLogic.before());
-                    BatchUtils.appends(sb, batchLogic.value(), this.mark, i == 0);
+                    BatchUtils.appends(sb, batchLogic.value(), this.mark, sb.length() == 0);
                 }
             }
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
@@ -122,11 +122,12 @@ public class BatchInsertTemplate extends AbstractTemplate {
         try {
             for (int k = 0; k < size; k++) {
                 Field[] fields = super.getField(list.get(k).getClass());
-                BatchUtils.appends(builder, BatchConstants.LEFT_PARENTHESIS, this.mark, k == 0);
+                BatchUtils.appends(builder, BatchConstants.LEFT_PARENTHESIS, this.mark, builder.length() == 0);
 
                 int len = fields.length;
                 for (int i = 0; i < len; i++) {
                     fields[i].setAccessible(true);
+
                     if (BatchUtils.isStatic(fields[i])) {
                         continue;
                     }
@@ -142,11 +143,12 @@ public class BatchInsertTemplate extends AbstractTemplate {
                     }
                     Object obj = this.setVal(name);
 
+                    String str = builder.substring(builder.length() - 1, builder.length());
                     if (obj != null) {
-                        BatchUtils.appends(builder, BatchUtils.getValue(fields[i].getType(), obj), this.mark, i == 0);
+                        BatchUtils.appends(builder, BatchUtils.getValue(fields[i].getType(), obj), this.mark, BatchConstants.LEFT_PARENTHESIS.equals(str));
                         continue;
                     }
-                    BatchUtils.appends(builder, BatchUtils.getValue(fields[i].getType(), fields[i].get(list.get(k))), this.mark, i == 0);
+                    BatchUtils.appends(builder, BatchUtils.getValue(fields[i].getType(), fields[i].get(list.get(k))), this.mark, BatchConstants.LEFT_PARENTHESIS.equals(str));
                 }
                 BatchUtils.appends(builder, BatchConstants.RIGHT_PARENTHESIS, null, false);
             }
