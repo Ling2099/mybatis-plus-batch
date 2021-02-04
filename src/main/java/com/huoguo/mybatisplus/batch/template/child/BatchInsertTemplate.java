@@ -17,7 +17,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -174,7 +173,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
         }
 
         if (BatchIdEnum.ASSIGN_UUID.getValue().equals(type)) {
-            return UUID.randomUUID().toString().replaceAll("-", "");
+            return BatchUtils.getUUID();
         }
 
         if (!StringUtils.isEmpty(type) && !BatchConstants.DEFAULT_VALUE.equals(type)) {

@@ -7,6 +7,7 @@ import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 工具类
@@ -123,5 +124,14 @@ public final class BatchUtils {
         for (Object obj : objects) {
             sb.append(obj);
         }
+    }
+
+    /**
+     * 获取UUID
+     *
+     * @return 字符串
+     */
+    public static String getUUID() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 }
