@@ -1,11 +1,15 @@
 package com.huoguo.mybatisplus.batch.model;
 
+import java.io.Serializable;
+
 /**
  * 存储运行时所执行的类名、方法名或值的实体类
  *
  * @author Lizhenghuang
  */
-public class HotPot {
+public class HotPot implements Serializable {
+
+    private static final long serialVersionUID = 349994932325393050L;
 
     /** 类名 **/
     private Class<?> clazz;

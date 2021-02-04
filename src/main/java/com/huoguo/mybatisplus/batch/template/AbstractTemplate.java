@@ -1,18 +1,15 @@
 package com.huoguo.mybatisplus.batch.template;
 
-import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.huoguo.mybatisplus.batch.annotation.BatchName;
 import com.huoguo.mybatisplus.batch.annotation.BatchSuper;
 import com.huoguo.mybatisplus.batch.constant.BatchConstants;
+import com.huoguo.mybatisplus.batch.model.BatchSource;
 import com.huoguo.mybatisplus.batch.model.Splicer;
+import com.huoguo.mybatisplus.batch.util.BatchBean;
 import com.huoguo.mybatisplus.batch.util.BatchUtils;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSession;
 
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -75,7 +72,7 @@ public abstract class AbstractTemplate {
      */
     private Boolean handle(List<?> list, Class<?> clazz, Splicer splicer) {
         String sql = this.getSql(list, this.getField(clazz), this.getTableName(clazz), splicer);
-        return execute(sql, clazz);
+        return execute(sql);
     }
 
     /**
@@ -90,6 +87,7 @@ public abstract class AbstractTemplate {
 
     /**
      * 获取对象数据
+     *
      * @param clazz 当前对象
      * @return 数组
      */
@@ -139,39 +137,36 @@ public abstract class AbstractTemplate {
     /**
      * 执行数据库操作
      *
-     * @param sql   可执行的SQL语句
-     * @param clazz 参数中的对象Class
+     * @param sql 可执行的SQL语句
      * @return 是否成功
      */
-    private Boolean execute(String sql, Class<?> clazz) {
-        SqlSession sqlSession = SqlHelper.sqlSessionBatch(clazz);
-        Configuration configuration = sqlSession.getConfiguration();
-        Connection connection = null;
-        Statement stmt = null;
+    private Boolean execute(String sql) {
+        BatchSource batchSource = (BatchSource) BatchBean.getBean(BatchConstants.DATA_SOURCE);
+        Connection conn = null;
+        PreparedStatement ptm = null;
         try {
-            connection = configuration.getEnvironment().getDataSource().getConnection();
-            stmt = connection.createStatement();
-            return stmt.execute(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            if (batchSource.getDataSource() != null) {
+                conn = batchSource.getDataSource().getConnection();
+            } else {
+                Class.forName(batchSource.getDriver());
+                conn = DriverManager.getConnection(batchSource.getUrl(), batchSource.getUsr(), batchSource.getPassword());
             }
-
-            if (connection != null) {
-                try {
-                    connection.close();
-                    sqlSession.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            ptm = conn.prepareStatement(sql);
+            return ptm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ptm != null) {
+                    ptm.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
+        return false;
     }
 }

@@ -10,7 +10,6 @@ import com.huoguo.mybatisplus.batch.template.AbstractTemplate;
 import com.huoguo.mybatisplus.batch.util.BatchBean;
 import com.huoguo.mybatisplus.batch.util.BatchSnow;
 import com.huoguo.mybatisplus.batch.util.BatchUtils;
-import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -83,7 +82,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
 
                         Class bean = hotPot.getClazz();
                         String method = hotPot.getMethod();
-                        if (bean != null && !StringUtils.isEmpty(method)) {
+                        if (bean != null && !BatchUtils.isEmpty(method)) {
                             Method md = bean.getMethod(method, null);
                             map.put(BatchUtils.toStr(name), md.invoke(bean, null));
                         } else {
@@ -176,7 +175,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
             return BatchUtils.getUUID();
         }
 
-        if (!StringUtils.isEmpty(type) && !BatchConstants.DEFAULT_VALUE.equals(type)) {
+        if (!BatchUtils.isEmpty(type) && !BatchConstants.DEFAULT_VALUE.equals(type)) {
             return type;
         }
         return null;

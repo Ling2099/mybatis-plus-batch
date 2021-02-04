@@ -1,6 +1,6 @@
 package com.huoguo.mybatisplus.batch.util;
 
-import org.springframework.util.StringUtils;
+import org.springframework.lang.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -105,11 +105,11 @@ public final class BatchUtils {
      */
     public static void appends(StringBuilder sb, Object val, String str, boolean isLast) {
         if (!isLast) {
-            if (!StringUtils.isEmpty(str)) {
+            if (!isEmpty(str)) {
                 sb.append(str);
             }
         }
-        if (!StringUtils.isEmpty(val)) {
+        if (!isEmpty(val)) {
             sb.append(val);
         }
     }
@@ -133,5 +133,15 @@ public final class BatchUtils {
      */
     public static String getUUID() {
         return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    /**
+     * 判别字符串是否为空或空字符串
+     *
+     * @param str 入参字符串
+     * @return Boolean
+     */
+    public static Boolean isEmpty(@Nullable Object str) {
+        return str == null || "".equals(str);
     }
 }

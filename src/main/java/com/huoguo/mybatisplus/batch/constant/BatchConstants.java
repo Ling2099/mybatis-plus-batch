@@ -71,4 +71,7 @@ public final class BatchConstants {
     /** 默认修改填充Bean Name **/
     @Deprecated
     public static final String FILL_NAME_UPDATE = "update";
+
+    /** 默认数据源Bean Name **/
+    public static final String DATA_SOURCE = "BatchSource";
 }

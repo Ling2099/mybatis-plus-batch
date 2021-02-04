@@ -7,7 +7,6 @@ import com.huoguo.mybatisplus.batch.template.AbstractTemplate;
 import com.huoguo.mybatisplus.batch.template.child.BatchDeleteTemplate;
 import com.huoguo.mybatisplus.batch.template.child.BatchInsertTemplate;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

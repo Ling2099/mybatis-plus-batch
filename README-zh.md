@@ -1,13 +1,13 @@
 <p align="center">
-  初心只是懒，为了不写SQL语句
+  初心只是懒，懒到什么都不想干的程度
 </p>
 
 
 
 ## 由来 | Origin
 
-基于Mybatis-Plus的工具包 - 简化`XML`文件中的`foreach`操作
-模仿Mybatis-Plus强大的工具包中近似的功能，刚好手中项目里有大量的数据库表需要批量操作，为了偷懒，手写一个简陋的工具包作为更懒的依托
+摆脱头疼的`XML`文件、繁琐的SQL语句，代替`foreach`操作  
+让这个简陋的工具包依托代替你更懒的心里寄托！别让再时间悄悄从指缝中流过
 
 
 
@@ -34,6 +34,26 @@
 
 ## 演示 | demonstration
 
+
+```
+    @Autowired
+    private DataSource dataSource;
+    
+    @Bean("BatchSource")
+    public BatchSource getDataSource() {
+        return new BatchSource(dataSource);
+    }
+    
+    // 或
+    
+    @Bean("BatchSource")
+    public BatchSource getDataSource() {
+        return new BatchSource(url, usr, password, driver);
+    }
+
+```
+
+初始化数据库连接信息
 
 ```
     @Data
@@ -159,7 +179,7 @@
 ```
     public Boolean test(String[] ids) {
         BatchService batchService = new BatchServiceImpl();
-        return batchService.deleteBatch(Arrays.asList(ids));
+        return batchService.deleteBatch(Arrays.asList(ids), User.class);
     }
 ```
 - 批量删除

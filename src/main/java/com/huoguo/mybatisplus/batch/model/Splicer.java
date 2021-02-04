@@ -1,6 +1,7 @@
 package com.huoguo.mybatisplus.batch.model;
 
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -9,8 +10,9 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author Lizhenghuang
  */
-public class Splicer {
+public class Splicer implements Serializable {
 
+    private static final long serialVersionUID = 1868317904364006795L;
     private Map<String, Object> map;
 
     public Splicer () {
