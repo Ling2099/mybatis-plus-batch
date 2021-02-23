@@ -1,5 +1,6 @@
 package com.huoguo.mybatisplus.batch.util;
 
+import com.huoguo.mybatisplus.batch.constant.BatchConstants;
 import org.springframework.lang.Nullable;
 
 import java.lang.reflect.Field;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
+import java.util.regex.Matcher;
 
 /**
  * 工具类
@@ -42,11 +44,12 @@ public final class BatchUtils {
 
     /**
      * 转换数据库与实体类映射字段
+     * 下划线/小写转大写
      *
      * @param str 数据库字段
      * @return 实体类属性
      */
-    public static String toStr(String str) {
+    public static String toUpper(String str) {
         StringBuilder builder = new StringBuilder();
         int len = str.length();
         for (int i = 0; i < len; i++) {
@@ -58,6 +61,27 @@ public final class BatchUtils {
                 continue;
             }
             builder.append(ch);
+        }
+        return builder.toString();
+    }
+
+    /**
+     * 转换数据库与实体类映射字段
+     * 大写转下划线/小写
+     *
+     * @param str 数据库字段
+     * @return 实体类属性
+     */
+    public static String toLower(String str) {
+        StringBuilder builder = new StringBuilder();
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+            String ch = str.charAt(i) + "";
+            Matcher matcher = BatchConstants.pattern.matcher(ch);
+            if (matcher.matches()) {
+                builder.append("_");
+            }
+            builder.append(ch.toLowerCase());
         }
         return builder.toString();
     }

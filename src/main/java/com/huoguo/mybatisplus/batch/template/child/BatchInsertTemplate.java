@@ -50,7 +50,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
                 }
 
                 if (fields[i].isAnnotationPresent(BatchIgnore.class)) {
-                    map.put(BatchUtils.toStr(fields[i].getName()), BatchConstants.DEFAULT_IGNORE);
+                    map.put(BatchUtils.toUpper(fields[i].getName()), BatchConstants.DEFAULT_IGNORE);
                     continue;
                 }
 
@@ -60,7 +60,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
                     int type = batchId.type().getKey();
 
                     if (type != BatchIdEnum.AUTO.getKey()) {
-                        map.put(BatchUtils.toStr(id), batchId.type().getValue());
+                        map.put(BatchUtils.toUpper(id), batchId.type().getValue());
                         BatchUtils.appends(sb, id, this.mark, sb.length() == 0);
                     }
                     continue;
@@ -68,7 +68,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
 
                 if (fields[i].isAnnotationPresent(BatchColumns.class)) {
                     BatchColumns batchColumns = fields[i].getAnnotation(BatchColumns.class);
-                    map.put(BatchUtils.toStr(batchColumns.value()), BatchConstants.DEFAULT_VALUE);
+                    map.put(BatchUtils.toUpper(batchColumns.value()), BatchConstants.DEFAULT_VALUE);
                     BatchUtils.appends(sb, batchColumns.value(), this.mark, sb.length() == 0);
                     continue;
                 }
@@ -84,9 +84,9 @@ public class BatchInsertTemplate extends AbstractTemplate {
                         String method = hotPot.getMethod();
                         if (bean != null && !BatchUtils.isEmpty(method)) {
                             Method md = bean.getMethod(method, null);
-                            map.put(BatchUtils.toStr(name), md.invoke(bean, null));
+                            map.put(BatchUtils.toUpper(name), md.invoke(bean, null));
                         } else {
-                            map.put(BatchUtils.toStr(name), hotPot.getVal());
+                            map.put(BatchUtils.toUpper(name), hotPot.getVal());
                         }
                         BatchUtils.appends(sb, name, this.mark, sb.length() == 0);
                         continue;
@@ -95,7 +95,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
 
                 if (fields[i].isAnnotationPresent(BatchLogic.class)) {
                     BatchLogic batchLogic = fields[i].getAnnotation(BatchLogic.class);
-                    map.put(BatchUtils.toStr(batchLogic.value()), batchLogic.before());
+                    map.put(BatchUtils.toUpper(batchLogic.value()), batchLogic.before());
                     BatchUtils.appends(sb, batchLogic.value(), this.mark, sb.length() == 0);
                 }
             }

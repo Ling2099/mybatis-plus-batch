@@ -1,5 +1,7 @@
 package com.huoguo.mybatisplus.batch.constant;
 
+import java.util.regex.Pattern;
+
 /**
  * 默认通用常量类
  * @author Lizhenghuang
@@ -74,4 +76,7 @@ public final class BatchConstants {
 
     /** 默认数据源Bean Name **/
     public static final String DATA_SOURCE = "BatchSource";
+
+    /** 默认正则英文字母大写 **/
+    public static Pattern pattern = Pattern.compile("[A-Z]+");
 }

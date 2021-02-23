@@ -157,7 +157,7 @@ public class BatchDeleteTemplate extends AbstractTemplate {
             try {
                 for (Field field : fields) {
                     field.setAccessible(true);
-                    if (field.getName().equals(BatchUtils.toStr(key))) {
+                    if (field.getName().equals(BatchUtils.toUpper(key))) {
                         for (int i = 0; i < size; i++) {
                             BatchUtils.appends(sb, BatchUtils.getValue(field.getType(), field.get(list.get(i))), BatchConstants.DEFAULT_COMMA, i == 0);
                         }
@@ -182,7 +182,7 @@ public class BatchDeleteTemplate extends AbstractTemplate {
     private void conditions(StringBuilder sb, String key, Field[] fields, Map map) {
         for (Field field : fields) {
             field.setAccessible(true);
-            if (field.getName().equals(BatchUtils.toStr(key))) {
+            if (field.getName().equals(BatchUtils.toUpper(key))) {
                 BatchUtils.appends(sb, BatchConstants.DEFAULT_AND, key, BatchConstants.DEFAULT_EQUAL, BatchUtils.getValue(field.getType(), map.get(key)));
                 break;
             }
