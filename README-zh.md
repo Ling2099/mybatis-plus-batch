@@ -7,7 +7,7 @@
 ## 由来 | Origin
 
 摆脱头疼的`XML`文件、繁琐的SQL语句，代替`foreach`操作  
-让这个简陋的工具包代替你更懒的心里寄托！别让再时间悄悄从指缝中流过
+让这个简陋的工具包代替你更懒的心里寄托！别再让时间悄悄从指缝中流过
 
 
 
@@ -34,6 +34,7 @@
 
 ## 演示 | demonstration
 
+初始化数据库连接信息
 
 ```
     @Autowired
@@ -53,7 +54,11 @@
 
 ```
 
-初始化数据库连接信息
+1.公共的父实体类，批量操作时需要维护的自动填充字段  
+2.@BatchFill注解
+- value为数据库字段名
+- insert 新增时是否需要自动填充，默认为false
+- update 编辑时是否需要自动填充，默认为false
 
 ```
     @Data
@@ -85,11 +90,12 @@
 
 ```
 
-1.公共的父实体类，批量操作时需要维护的自动填充字段  
-2.@BatchFill注解
-- value为数据库字段名
-- insert 新增时是否需要自动填充，默认为false
-- update 编辑时是否需要自动填充，默认为false
+1.如果使用自动填充功能，需要实现BatchFillService接口，配置需要自动填充的字段名、执行类、执行方法或值，并注入Bean，其名称为insert/update  
+2.将BatchBean类注入Spring容器中  
+3.HotPot对象
+- 参数一：需要填充字段值的类Class，可以为null，代表给其字段死值，而非程序运行时计算得到
+- 参数二：需要填充字段值的类方法名，可以为null，同上
+- 参数三：若前两个参数为null时，代表其值是固定的，填上即可  
 
 ```
     @Component
@@ -121,13 +127,12 @@
     
 
 ```
-1.如果使用自动填充功能，需要实现BatchFillService接口，配置需要自动填充的字段名、执行类、执行方法或值，并注入Bean，其名称为insert/update  
-2.将BatchBean类注入Spring容器中
-3.HotPot对象
-- 参数一：需要填充字段值的类Class，可以为null，代表给其字段死值，而非程序运行时计算得到
-- 参数二：需要填充字段值的类方法名，可以为null，同上
-- 参数三：若前两个参数为null时，代表其值是固定的，填上即可  
 
+1.具体的业务实体类，类注解@BatchName需要添加该实体类所映射的数据库表名  
+2.@BatchId注解：value主键ID的数据库字段名，type可以选择生成策略（自增、用户输入、雪花ID、UUID）  
+3.@TableColumns注解：数据库字段名  
+4.@BatchIgnore注解：在批量操作时，需要忽略的字段名  
+5.@BatchLogic注解：逻辑删除字段默认删除前为0，删除后为1；可自定义before/after
 
 ```
     @Data
@@ -157,11 +162,8 @@
         private int isDel;
     }  
 ```
-1.具体的业务实体类，类注解@BatchName需要添加该实体类所映射的数据库表名  
-2.@BatchId注解：value主键ID的数据库字段名，type可以选择生成策略（自增、用户输入、雪花ID、UUID）  
-3.@TableColumns注解：数据库字段名  
-4.@BatchIgnore注解：在批量操作时，需要忽略的字段名  
-5.@BatchLogic注解：逻辑删除字段默认删除前为0，删除后为1；可自定义before/after
+
+- 批量新增
 
 ```
     public Boolean test() {
@@ -174,7 +176,8 @@
         return batchService.insertBatch(list);
     }
 ```
-- 批量新增
+
+- 批量删除
 
 ```
     public Boolean test(String[] ids) {
@@ -182,7 +185,8 @@
         return batchService.deleteBatch(Arrays.asList(ids), User.class);
     }
 ```
-- 批量删除
+
+
 
 ```xml
 <dependency>
