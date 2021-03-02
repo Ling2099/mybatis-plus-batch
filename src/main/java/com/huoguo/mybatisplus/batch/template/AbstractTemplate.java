@@ -152,7 +152,7 @@ public abstract class AbstractTemplate {
                 conn = DriverManager.getConnection(batchSource.getUrl(), batchSource.getUsr(), batchSource.getPassword());
             }
             ptm = conn.prepareStatement(sql);
-            return ptm.execute();
+            return ptm.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
